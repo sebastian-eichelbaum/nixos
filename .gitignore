@@ -1,0 +1,9 @@
+# Never track the generated hardware config.
+hardware-configuration.nix
+
+# Ignore the link to the used machine setup.
+machine.nix
+users.nix
+
+# Do not track the result dir
+result
