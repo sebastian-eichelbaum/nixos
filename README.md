@@ -2,6 +2,10 @@
 
 Personal NixOS configuration for work and pleasure. This configuration does not use home-manager nor flakes.
 
+This creates a minimal encrypted dev machine, using X+AwesomeWM for windowing; neovim, zsh and devbox for coding/working.
+
+Works well with my dotfiles: https://github.com/sebastian-eichelbaum/dotfiles
+
 ## NixOS Installation
 
 ### Disk Setup
