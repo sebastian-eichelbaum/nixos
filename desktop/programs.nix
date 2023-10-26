@@ -9,8 +9,9 @@
   # Firefox by default, some options pre-set.
   programs.firefox = {
     enable = true;
-    nativeMessagingHosts.passff = true;
-    nativeMessagingHosts.tridactyl = true;
+
+    # Native hosts:
+    nativeMessagingHosts.packages = with pkgs; [ passff-host tridactyl-native];
 
     # Note: this is not the dictionary list.
     languagePacks = [ "en-US" "de" ];

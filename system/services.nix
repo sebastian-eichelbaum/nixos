@@ -42,11 +42,16 @@
   #
 
   # Locate service
-  services.locate.enable = true;
-  services.locate.locate = pkgs.mlocate;
-  # Default is during the night and will never trigger on a desktop that is off.
-  services.locate.interval = "12:00";
-  services.locate.localuser = null; # required by mlocate
+  services.locate = {
+    enable = true;
+    package = pkgs.mlocate;
+    # Default is during the night and will never trigger on a desktop that is off.
+    interval = "12:00";
+    localuser = null; # required by mlocate
+  };
+
+  # Tailscale VPN
+  services.tailscale.enable = true;
 
   # Logrotate - needed?
   #services.logrotate.enable =true;
