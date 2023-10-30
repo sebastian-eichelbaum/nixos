@@ -89,6 +89,7 @@
 
       unrar
       unzip
+      zip
 
       pass
     ]

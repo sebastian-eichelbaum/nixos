@@ -35,9 +35,5 @@
   #nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1v" ];
 
   # As with a lot of proprietary shit, explicitly list the library paths
-  # using nix-ld
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [ vulkan-loader ];
-  };
+  # using nix-ld. Refer to the corresponding nix file.
 }

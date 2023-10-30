@@ -4,7 +4,7 @@
   imports = [
     # Use awesome as window manager
     ./awesome.nix
-    # Use a stripped down gnome as base   
+    # Use a stripped down gnome as base
     ./gnome-core.nix
 
     # Make it look good
@@ -21,5 +21,8 @@
 
     # Syncthing
     ./syncthing.nix
+
+    # Expoze libraries for binary programs
+    ./nix-ld.nix
   ];
 }
