@@ -12,6 +12,8 @@
     # lutris
 
     yuzu-mainline
+
+    sidequest
   ];
 
   # Game mode is very handy

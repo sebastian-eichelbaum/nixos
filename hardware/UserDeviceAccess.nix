@@ -20,7 +20,7 @@
   # Arduino Micro Bootloader - Seperate ID
   #SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0037", MODE="0666", GROUP="users"
 
-  # Oculus Quest 2
-  # SUBSYSTEM=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0660", GROUP="users"
+  # Oculus Quest 2/3
+  SUBSYSTEM=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0660", GROUP="users"
 }
 
