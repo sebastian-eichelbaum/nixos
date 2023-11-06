@@ -2,14 +2,27 @@
 
 {
   #############################################################################
-  # Development: Common tools
+  # Direnv: allows to automatically activate environemnts like devbox when
+  #         cd-ing into a dir.
   #
+  # It requires some config though. Add a direnv.toml to ~/.config/direnv and
+  # refer to the man page.
 
-  # Handy shell local environment handler.
   programs.direnv = {
     enable = true;
     silent = true;
   };
+
+  # WARNING: currently, ~/.config/direnv/direnv.toml is ignored in NixOS. To
+  #          make this work, you have to set DIRENV_CONFIG=~/.config/direnv
+  #          either manually or in the system/user.nix file.
+  environment.shellInit = ''
+    DIRENV_CONFIG="$HOME/.config/direnv"
+  '';
+
+  #############################################################################
+  # Development: Common tools
+  #
 
   environment.systemPackages = with pkgs; [
     #############################
