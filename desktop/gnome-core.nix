@@ -8,9 +8,28 @@
   services.xserver.desktopManager.gnome = {
     enable = true;
 
-    # Add some GSettings? Do not use that. The dotfiles contain the xsession\
-    # files that fiddle with these settings.
-    # extraGSettingsOverrides = "";
+    # Add some GSettings and custom overrides? Be careful. There are some
+    # issues. I.e.:
+    # * changing this value is usually set once during first install.
+    # If the user overrides it, it is ignored.
+    # * This defines the default value only.
+    #
+    # See https://nixos.org/manual/nixos/unstable/#sec-gnome-gsettings-overrides
+
+    # Allows to set a string to override settings.
+    extraGSettingsOverrides = ''
+      # Change default terminal for  nautilus-open-any-terminal
+      [com.github.stunkymonkey.nautilus-open-any-terminal]
+      terminal='kitty'
+    '';
+
+    # If a settings should be overwritten in extraGSettingsOverrides, the package
+    # that provides the schema must be listed hereL
+    extraGSettingsOverridePackages = with pkgs;
+      [
+        # A nice way to use a custom terminal for nautilus
+        nautilus-open-any-terminal
+      ];
   };
 
   # Configure Gnome services. This allows some detailed settings what to use
@@ -115,6 +134,15 @@
 
     # gsettings editor
     gnome.dconf-editor
+
+    # Support python-based Nautilus extensions
+    gnome.nautilus-python
+
+    # Allows to open an arbitrary terminal instead of kgx (gnome terminal)
+    # Configure via
+    # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
+    nautilus-open-any-terminal
+    rabbitvcs
   ];
 
   # Required for some apps to work (to be able to query settings)

@@ -25,6 +25,11 @@
   #
 
   environment.systemPackages = with pkgs; [
+
+    # Company fonts - I use these for some work-related things
+    montserrat
+    raleway
+
     #############################
     # Editors
     #

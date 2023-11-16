@@ -38,7 +38,8 @@ in {
   # {{{ Services and background programs to run per desktop session
   #
 
-  # Compositing
+  # Compositing. NOTE: this provides picom as sustemd service but does not allow
+  # to load a custom config file in $HOME
   services.picom.enable = true;
 
   # Clipboard manager
@@ -118,7 +119,7 @@ in {
     # calls its notifier in that case. It is used to dim the
     # screen. If xss-lock is not running, the screen blanks.
     #
-    # The second number triggers after the notification and 
+    # The second number triggers after the notification and
     # usually locks.
     xset s 180 400
   '';

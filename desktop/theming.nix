@@ -1,5 +1,3 @@
-
-
 { config, lib, pkgs, ... }:
 
 {
@@ -13,10 +11,7 @@
     dejavu_fonts
     ubuntu_font_family
     roboto
-
-    # Company fonts
-    montserrat
-    raleway
+    noto-fonts
 
     # Fancy icon fonts. Used in Awesome.
     font-awesome
@@ -40,8 +35,8 @@
     # Tool to configure the colors of libadwaita/gtk4 apps.
     gradience
 
-    # ATTENTION: All the nice GTK themes, like "Fluent" are not working 
-    #            properly. Forget about them. Use gradience to colorize 
+    # ATTENTION: All the nice GTK themes, like "Fluent" are not working
+    #            properly. Forget about them. Use gradience to colorize
     #            the libadwaita/gtk4 themes.
   ];
 
@@ -72,5 +67,4 @@
   qt.enable = true;
   qt.style = "adwaita-dark"; # Most close match?!
   qt.platformTheme = "gnome";
-
 }

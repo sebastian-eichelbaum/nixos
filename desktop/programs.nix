@@ -31,10 +31,11 @@
     ocrmypdf
     pandoc
 
-    # Communication
-    rocketchat-desktop
-    slack
-    discord
+    # Communication - Most stuff works nicely with ferdium!
+    # rocketchat-desktop
+    # slack
+    # discord
+    ferdium
     thunderbird
 
     # Utils
