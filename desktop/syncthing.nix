@@ -15,7 +15,8 @@ in {
     group = user;
 
     # Assume everything to be in the users home
-    dataDir = "/home/${user}";
+    # NOTE: data dir will contain the index db.
+    dataDir = "/home/${user}/.config/syncthing";
     configDir = "/home/${user}/.config/syncthing";
 
     # Open FW for Syncthing
@@ -40,11 +41,11 @@ in {
       options.localAnnounceEnabled = true;
 
       devices = {
-        # This is an introducer. It will automatically provide its known devices 
+        # This is an introducer. It will automatically provide its known devices
         # to us. So we only need to list this one here.
         #
-        # To manage the server: 
-        #   * ssh -L 9092:localhost:8384 seb@server_url 
+        # To manage the server:
+        #   * ssh -L 9092:localhost:8384 seb@server_url
         #   * Browse to localhost:9092
         "Server" = {
           # Never changes if the original key and cert is kept

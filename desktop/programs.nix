@@ -3,6 +3,44 @@
 {
 
   #############################################################################
+  # XDG Mime and Default Apps
+  #
+
+  # This allows to configure the XDG Mime <-> App mapping.
+  # I.e. - you want SVG to always open in Inkscape, define it here.
+  xdg.mime = {
+    enable = true;
+
+    # Default mappings.
+    # WARNING: some application desktop files are wierdly named. Check the contents
+    # of the appropriate package for details
+    defaultApplications = {
+      "application/pdf" = "org.gnome.Evince.desktop";
+
+      # Images:
+      "image/" = [ "org.gnome.eog.desktop" "gimp.desktop" ];
+      "image/svg+xml" = [
+        "org.gnome.eog.desktop"
+        "org.inkscape.Inkscape.desktop"
+        "gimp.desktop"
+      ];
+      "image/png" = [ "org.gnome.eog.desktop" "gimp.desktop" ];
+      "image/jpg" = [ "org.gnome.eog.desktop" "gimp.desktop" ];
+      "image/jpeg" = [ "org.gnome.eog.desktop" "gimp.desktop" ]; # different from jpg. Why?
+      "image/webp" = [ "org.gnome.eog.desktop" "gimp.desktop" ];
+
+      # Text
+      "text/" = [ "nvim.desktop" "code.desktop" ];
+      "text/plain" = [ "nvim.desktop" "code.desktop" ];
+    };
+
+    # Add other software explicitly:
+    # addedAssociations
+    # Remove these mappings explicitly:
+    # removedAssociations
+  };
+
+  #############################################################################
   # Apps
   #
 
@@ -11,7 +49,7 @@
     enable = true;
 
     # Native hosts:
-    nativeMessagingHosts.packages = with pkgs; [ passff-host tridactyl-native];
+    nativeMessagingHosts.packages = with pkgs; [ passff-host tridactyl-native ];
 
     # Note: this is not the dictionary list.
     languagePacks = [ "en-US" "de" ];

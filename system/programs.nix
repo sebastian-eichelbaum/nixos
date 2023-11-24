@@ -75,11 +75,11 @@
       # Commonly used tools
       #
 
-      silver-searcher # aka "ag"
-      fzf
-      ncdu
+      ripgrep         # fast grep, aka rg
+      fd              # nice find replacement
+      fzf             # fuzzy finder
 
-      pwgen
+      ncdu            # disk usage utility
 
       git # No git, no dotfiles, no nothing.
       mr
@@ -91,6 +91,7 @@
       unzip
       zip
 
+      pwgen
       pass
     ]
     # Graphical tools only if the Xserver is enabled

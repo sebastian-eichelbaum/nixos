@@ -2,14 +2,26 @@
 
 {
   imports = [
+    ###########################################################################
+    # Desktop Base
+    #
+    
     # Use awesome as window manager
     ./awesome.nix
+    
     # Use a stripped down gnome as base
     ./gnome-core.nix
 
     # Make it look good
     ./theming.nix
 
+    # Compositor Setup
+    ./picom.nix
+
+    ###########################################################################
+    # Programs and Tools
+    #
+ 
     # Add flatpak support
     ./flatpak.nix
 

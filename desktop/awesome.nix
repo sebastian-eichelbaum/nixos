@@ -38,10 +38,6 @@ in {
   # {{{ Services and background programs to run per desktop session
   #
 
-  # Compositing. NOTE: this provides picom as sustemd service but does not allow
-  # to load a custom config file in $HOME
-  services.picom.enable = true;
-
   # Clipboard manager
   services.greenclip.enable = true;
 
@@ -50,6 +46,18 @@ in {
 
   # The GPG agent to store unlocked keys per session
   programs.gnupg.agent.enable = true;
+
+  # Compositing. NOTE: this has some drawbacks:
+  #  * does not load a config file in $HOME
+  #  * BUG: systemd service gone missing?!
+  #services.picom = {
+  #  # Disabled. Too many issues. Installed as a package instead
+  #  enable = false;
+  #  settings = {
+  #    # vsync = false;
+  #    # ...
+  #  };
+  #};
 
   # }}}
 
@@ -81,7 +89,6 @@ in {
     # Nice screen locker
     xss-lock
     i3lock-fancy-rapid
-
   ];
 
   # Make kitty the default for those that respect the TERMINAL variable

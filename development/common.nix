@@ -14,8 +14,7 @@
   };
 
   # WARNING: currently, ~/.config/direnv/direnv.toml is ignored in NixOS. To
-  #          make this work, you have to set DIRENV_CONFIG=~/.config/direnv
-  #          either manually or in the system/user.nix file.
+  #          make this work, you have to set DIRENV_CONFIG:
   environment.shellInit = ''
     DIRENV_CONFIG="$HOME/.config/direnv"
   '';
@@ -47,6 +46,8 @@
     git
     gittyup
     meld
+    lazygit
+    delta
 
     ##################################################
     # Local coding environemnt basics:
