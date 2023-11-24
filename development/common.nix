@@ -47,7 +47,6 @@
     gittyup
     meld
     lazygit
-    delta
 
     ##################################################
     # Local coding environemnt basics:
