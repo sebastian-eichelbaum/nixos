@@ -2,8 +2,14 @@
 
 {
 
-  # Compositing. NOTE: this provides picom as sustemd service but does not allow
+  # Compositing.
+  #
+  # NOTE: this provides picom as sustemd service but does not allow
   # to load a custom config file in $HOME
+  #
+  # NOTE: picom service is not starting? systemctl --user status picom
+  # complains the service file not being found? Delete the link
+  # ~.config/systemd/user/picom.service
   services.picom = {
 
     enable = true;
