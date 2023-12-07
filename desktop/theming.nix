@@ -45,7 +45,8 @@
   # seems to work still.
   environment.sessionVariables = rec {
     # GTK Theme to use: make gtk3 use gtk4 theming.
-    GTK_THEME = "adw-gtk3";
+    # NOTE: this also affects GTK4 apps.
+    GTK_THEME = "adw-gtk3-dark";
 
     # Make Mozilla System Themes have a proper titlebar without additional
     # decorations.

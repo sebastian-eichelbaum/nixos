@@ -43,8 +43,9 @@
       "text/plain" = [ "nvim.desktop" "code.desktop" ];
     };
 
-    # Add other software explicitly:
-    # addedAssociations
+    # Add other software explicitly.
+    addedAssociations = {};
+
     # Remove these mappings explicitly:
     # removedAssociations
   };

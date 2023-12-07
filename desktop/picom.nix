@@ -88,7 +88,8 @@
       # menu-opacity = 1.0;
 
       # Can look nice but causes a flicker for grouped windows sometimes if the child window closes.
-      inactive-dim = 7.5e-2;
+      # NOTE: when using a color picker, the color picker picks up the dimmed color for inactive windows.
+      # inactive-dim = 7.5e-2;
 
       # Let inactive opacity set by -i override the '_NET_WM_OPACITY' values of windows.
       # If true, picom overrides the settings provided by the window manager
