@@ -7,5 +7,8 @@
 
     # Everything required for Unity Development
     ./unity.nix
+
+    # Cuda development tools.
+    ./cuda.nix
   ];
 }

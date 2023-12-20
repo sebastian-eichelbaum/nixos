@@ -68,4 +68,17 @@
       options = "--delete-older-than 7d";
     };
   };
+
+  #############################################################################
+  # Nix Features
+  #
+
+  nix.settings.experimental-features = [
+    # To enable the nice experimental nix command features
+    "nix-command"
+
+    # Flakes support
+    # "flakes"
+
+  ];
 }

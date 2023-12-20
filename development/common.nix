@@ -4,6 +4,7 @@
   #############################################################################
   # Direnv: allows to automatically activate environemnts like devbox when
   #         cd-ing into a dir.
+  #         Add .envrc to a dir and it will be parsed automatically.
   #
   # It requires some config though. Add a direnv.toml to ~/.config/direnv and
   # refer to the man page.
@@ -41,6 +42,13 @@
     #
 
     gnumake
+    # Expoze the system gcc - although devbox/devenv should provide these for 
+    # projects, it helps to build wheels with pip for example. This ensures the
+    # lib versions match.
+    gcc
+
+    # Formatter. Very handy for most dev scenarios
+    clang-tools_16
 
     # Git and git related UI tools
     git

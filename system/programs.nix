@@ -41,9 +41,9 @@
       killall
       psmisc # fuser, (also killall), pstree, ...
       wget
+      rsync
       htop
       file
-      rsync
 
       #############################
       # Administrative tools

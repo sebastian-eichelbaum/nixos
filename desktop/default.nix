@@ -5,10 +5,10 @@
     ###########################################################################
     # Desktop Base
     #
-    
+
     # Use awesome as window manager
     ./awesome.nix
-    
+
     # Use a stripped down gnome as base
     ./gnome-core.nix
 
@@ -21,7 +21,7 @@
     ###########################################################################
     # Programs and Tools
     #
- 
+
     # Add flatpak support
     ./flatpak.nix
 
@@ -34,7 +34,8 @@
     # Syncthing
     ./syncthing.nix
 
-    # Expoze libraries for binary programs
+
+    # Nix-LD to handle all the lib lookup for binaries
     ./nix-ld.nix
-  ];
+ ];
 }
