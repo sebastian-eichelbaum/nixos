@@ -78,7 +78,6 @@
     "nix-command"
 
     # Flakes support
-    # "flakes"
-
+    "flakes"
   ];
 }

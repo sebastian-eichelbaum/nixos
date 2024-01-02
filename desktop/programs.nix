@@ -35,6 +35,9 @@
         "org.gnome.eog.desktop"
         "gimp.desktop"
       ]; # different from jpg. Why?
+      "image/gif" =
+        [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
+
       "image/webp" =
         [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
 
@@ -44,7 +47,7 @@
     };
 
     # Add other software explicitly.
-    addedAssociations = {};
+    addedAssociations = { };
 
     # Remove these mappings explicitly:
     # removedAssociations

@@ -6,14 +6,19 @@
   #
 
   environment.systemPackages = with pkgs; [
-    steam
 
     # protonup-qt
+
+    # Game launchers and stores
+    steam
     # lutris
+    # heroic
 
-    yuzu-mainline
+    # Emulation
+    # yuzu-mainline
 
-    sidequest
+    # VR
+    # sidequest
   ];
 
   # Game mode is very handy
