@@ -13,12 +13,23 @@
     roboto
     noto-fonts
 
-    # Fancy icon fonts. Used in Awesome.
+    # Fancy icon fonts. Used in my AwesomeWM config.
     font-awesome
     font-awesome_5
 
     # Coding/Shell Fonts
-    (nerdfonts.override { fonts = [ "Hack" ]; })
+    # The font names do not match the fontnames in the nix package repos. Check
+    # the shas.nix file to find the right name:
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/data/fonts/nerdfonts/shas.nixTo
+    (nerdfonts.override {
+      fonts = [
+        # Default font used in my kitty terminal
+        "Hack"
+
+        # Others... 
+        # "JetBrainsMono" "Inconsolata" "SourceCodePro"
+      ];
+    })
   ];
 
   #############################################################################

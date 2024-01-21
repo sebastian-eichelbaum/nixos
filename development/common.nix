@@ -62,6 +62,6 @@
     devbox
 
     # Devenv recommends cachix as everything is build from source.
-    # (import (fetchTarball https://install.devenv.sh/latest)).default
+    #(import (fetchTarball https://install.devenv.sh/latest)).default
   ];
 }
