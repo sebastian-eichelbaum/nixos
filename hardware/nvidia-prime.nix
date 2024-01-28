@@ -112,4 +112,5 @@
 
   # glxinfo is needed by the game-run script.
   environment.systemPackages = with pkgs; [ glxinfo ];
+
 }

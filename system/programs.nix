@@ -75,28 +75,12 @@
       # Commonly used tools
       #
 
-      # NOTE: these tools are usually intertwined. Removing one will probably break the others.
-      ripgrep         # fast grep, aka rg
-      fd              # nice find replacement
-      fzf             # fuzzy finder
-      bat             # Cat replacement with colors
-      tree            # Dir tree previews in fzf
-      delta           # Pager and Diff highlighter. Used with git.
-
-      ncdu            # disk usage utility
-
       git # No git, no dotfiles, no nothing.
-      mr
-
-      imagemagick
-      ghostscript # needed for imagemagick and pdf stuff
 
       unrar
       unzip
       zip
 
-      pwgen
-      pass
     ]
     # Graphical tools only if the Xserver is enabled
     ++ (if config.services.xserver.enable then

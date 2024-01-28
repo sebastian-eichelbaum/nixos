@@ -1,7 +1,7 @@
 # #############################################################################
 # Host/Hardware Setup
 #
-# Host: worky 
+# Host: worky
 # Hardware: Razer Blade Advanced 15, Late 2020
 
 { config, lib, pkgs, ... }:
@@ -54,7 +54,7 @@
   #
   # -> Use a seperate boot. Remember to set efiSysMountPoint in the bootloader
   # config.
-  # fileSystems."/boot/efi" = {  
+  # fileSystems."/boot/efi" = {
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/ESP";
     fsType = "vfat";
@@ -66,14 +66,14 @@
     size = 16 * 1024;
   }];
 
-  # Enable periodic TRIM on these? Its an nvme ssd that supports it. Check 
+  # Enable periodic TRIM on these? Its an nvme ssd that supports it. Check
   # "lsblk --discard" to validate.
   #
   # Keep in mind: enabling peridic and contiuous TRIM (using discard options
   # in fstab and crypttab/initrd luks) at the same time does not make sense.
   # Well .. technically. If you forget some "hidden" discard somewhere in the
-  # config, it is easy to miss a disk. And it does not cost you anything, 
-  # especially since it is run every week or so. Just enable it. 
+  # config, it is easy to miss a disk. And it does not cost you anything,
+  # especially since it is run every week or so. Just enable it.
   services.fstrim.enable = true;
 
   #############################################################################
@@ -82,7 +82,7 @@
 
   # Only root is needed for booting. To avoid unlocking home in initrd, it is
   # Listed in crypttab and uses a keyfile to unlock:
-  # Create key: 
+  # Create key:
   #   sudo dd if=/dev/random of=/root/crypthome.disk.key bs=4096 count=1
   # Set as Key:
   #   sudo cryptsetup luksAddKey /dev/nvme0n1p3 disk.key --iter-time 250
@@ -153,8 +153,8 @@
     # A list of packages containing additional, required kernel modules
     extraModulePackages = [ ];
 
-    # Blacklist some modules. 
-    # WARNING: unlike many recommendations online, it is not recommended to 
+    # Blacklist some modules.
+    # WARNING: unlike many recommendations online, it is not recommended to
     #          disable uvcvideo or other drivers because they enable power
     #          management! Example: disable uvcvideo and the cam will not power
     #          down.
@@ -168,7 +168,7 @@
   hardware.cpu.intel.updateMicrocode = true;
   hardware.cpu.amd.updateMicrocode = false;
 
-  # use intel+nvidia vaapi. NOTE: 
+  # use intel+nvidia vaapi. NOTE:
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver
     nvidia-vaapi-driver
@@ -187,7 +187,7 @@
   # networking.networkmanager.wifi.powersave =true;
 
   # Be warned. Enabling this activates a lot of power saving features but can
-  # also mess up laptop keybords and mouse. 
+  # also mess up laptop keybords and mouse.
   # powerManagement.powertop.enable = true;
 
   # P-States magic makes this superfluous.
@@ -274,5 +274,7 @@
     ../hardware/nvidia-prime.nix
     # Use Logitech input devices
     ../hardware/logitech-hid.nix
-  ];
+    # Use the Brother scanner
+    ../hardware/Brother_ADS-1700W.nix
+   ];
 }

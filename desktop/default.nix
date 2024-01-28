@@ -18,22 +18,15 @@
     # Compositor Setup
     ./picom.nix
 
+    # Mime setup
+    ./mime.nix
+
     ###########################################################################
     # Programs and Tools
     #
 
     # Add flatpak support
     ./flatpak.nix
-
-    # And all the nice programs
-    ./programs.nix
-
-    # And all the nice game stuff
-    ./gaming.nix
-
-    # Syncthing
-    ./syncthing.nix
-
 
     # Nix-LD to handle all the lib lookup for binaries
     ./nix-ld.nix

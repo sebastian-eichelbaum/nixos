@@ -83,6 +83,25 @@ the created config is only relevant for its hardware configuration.
         users.users."root".hashedPassword = "efgh";
     }
     ```
+- Configure the selection of programs.
+  - Create `programs.nix` - it imports everything you want to install
+  - Edit /etc/nixos/programs.nix:
+    ```nix
+    { config, pkgs, ... }:
+    {
+        imports = [
+            # Install everything
+            ./programs
+
+            # ... or select:
+            ./programs/cli.nix
+            # ...
+        ];
+
+        # Add machine specific things here
+        environment.systemPackages = with pkgs; [ ];
+    }
+    ```
 
 ### NixOS Installation
 

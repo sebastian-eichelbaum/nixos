@@ -2,26 +2,29 @@
 
 {
   #############################################################################
-  # Gaming
+  # Games and emulators
   #
 
-  environment.systemPackages = with pkgs; [
+  # Games and emulators
+  environment.systemPackages = with pkgs;
+    [
+      # Game launchers and stores
+      steam
+      # lutris
+      # heroic
 
-    # protonup-qt
+      # Emulation
+      # yuzu-mainline
 
-    # Game launchers and stores
-    steam
-    # lutris
-    # heroic
+      # VR
+      # sidequest
+    ];
 
-    # Emulation
-    # yuzu-mainline
+  #############################################################################
+  # Gamemode support
+  #
 
-    # VR
-    # sidequest
-  ];
-
-  # Game mode is very handy
+  # Unlike its name, it is not only useful for games.
   programs.gamemode.enable = true;
   programs.gamemode.enableRenice = true;
   programs.gamemode.settings = {
