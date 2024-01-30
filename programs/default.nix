@@ -13,8 +13,8 @@
     # Games and GameMode
     ./gaming.nix
 
-    # Work, all the Coding  and GameMode
+    # Work stuff
     ./coding.nix
-
+    ./virtualisation.nix
   ];
 }

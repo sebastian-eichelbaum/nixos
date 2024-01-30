@@ -76,6 +76,10 @@ in {
           "video"
           "plugdev"
           "input"
+
+          # Allow virtualization 
+          "libvirtd"
+          "vboxusers"
         ];
 
         # Overwrite the default shell?
