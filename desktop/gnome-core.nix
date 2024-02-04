@@ -150,7 +150,7 @@
     nautilus-open-any-terminal
 
     # much more useful in comparison to loupe
-    gthumb
+    gnome.eog
   ];
 
   # Required for some apps to work (to be able to query settings)

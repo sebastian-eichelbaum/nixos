@@ -12,6 +12,8 @@
     #
 
     # NOTE: vim/neovim are configured by the NixOS system config
+
+    # VS Code is working well with unity and has good C# support out of the box
     vscode
 
     ###########################################################################
@@ -29,6 +31,9 @@
 
     # Formatter. Very handy for most dev scenarios
     clang-tools_16
+
+    # Very nice for big directory comparisons
+    meld
 
     ###########################################################################
     # Local coding environemnt basics:
@@ -55,9 +60,6 @@
           # openssl_1_1
         ];
     })
-
-    # VS Code is working well with unity.
-    vscode
 
     # Nice formatting of C# code
     clang-tools_16
