@@ -76,6 +76,7 @@
       #
 
       git # No git, no dotfiles, no nothing.
+      git-lfs
 
       unrar
       unzip

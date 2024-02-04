@@ -18,27 +18,27 @@
 
       # Images:
       "image/" =
-        [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
+        [ "org.gnome.gThumb.desktop" "org.gnome.Loupe.desktop" "gimp.desktop" ];
       "image/svg+xml" = [
+        "org.gnome.gThumb.desktop"
         "org.gnome.Loupe.desktop"
-        "org.gnome.eog.desktop"
         "org.inkscape.Inkscape.desktop"
         "gimp.desktop"
       ];
       "image/png" =
-        [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
+        [ "org.gnome.gThumb.desktop" "org.gnome.Loupe.desktop" "gimp.desktop" ];
       "image/jpg" =
-        [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
+        [ "org.gnome.gThumb.desktop" "org.gnome.Loupe.desktop" "gimp.desktop" ];
       "image/jpeg" = [
+        "org.gnome.gThumb.desktop"
         "org.gnome.Loupe.desktop"
-        "org.gnome.eog.desktop"
         "gimp.desktop"
       ]; # different from jpg. Why?
       "image/gif" =
-        [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
+        [ "org.gnome.gThumb.desktop" "org.gnome.Loupe.desktop" "gimp.desktop" ];
 
       "image/webp" =
-        [ "org.gnome.Loupe.desktop" "org.gnome.eog.desktop" "gimp.desktop" ];
+        [ "org.gnome.gThumb.desktop" "org.gnome.Loupe.desktop" "gimp.desktop" ];
 
       # Text
       "text/" = [ "nvim.desktop" "code.desktop" ];

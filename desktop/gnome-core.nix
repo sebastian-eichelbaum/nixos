@@ -88,7 +88,13 @@
   # Exclude all those nasty gnome apps:
   environment.gnome.excludePackages =
     # Some packages are not part of pkgs.gnome.
-    (with pkgs; [ gnome-photos gnome-tour gnome-text-editor ])
+    (with pkgs; [
+      gnome-tour
+      gnome-text-editor
+      gnome-photos
+      # Useless image viewer
+      loupe
+    ])
     ++ (with pkgs.gnome; [
       baobab # disk usage analyzer
       cheese # photo booth
@@ -142,7 +148,9 @@
     # Configure via
     # gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty
     nautilus-open-any-terminal
-    rabbitvcs
+
+    # much more useful in comparison to loupe
+    gthumb
   ];
 
   # Required for some apps to work (to be able to query settings)
