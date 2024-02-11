@@ -255,13 +255,16 @@
   services.udev.extraRules = ''
     ## Blacklist autosuspend for some USB devices.
 
-    # The integrated keyboard
+    ## The integrated keyboard
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="0253", ATTR{power/autosuspend_delay_ms}="-1"
     ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="0253", ATTR{power/control}="on"
 
     ## ALPM (Active Link Power Management) for SATA. The Card Reader. SATA SSD are also supported.
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
 
+    ## Allow tools that configure razer keyboard and power modes
+    ## See https://www.rzrctrl.com/
+    KERNEL=="hidraw*", ATTRS{idProduct}=="020f|0210|0224|0225|022d|022f|0232|0233|0234|0239|023a|023b|0240|0245|0246|024a|0252|0253|0255|0256|026a|026f|0270|0276|026d|027a|028a|028b|028c|0259|029f|029d|026e|", ATTRS{idVendor}=="1532", MODE="0666", TAG+="uaccess"
 
   '';
 
