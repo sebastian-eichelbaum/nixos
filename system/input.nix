@@ -6,9 +6,8 @@
   #
 
   # Configure keymap in X11 to match
-  services.xserver.layout = "eu";
-  #services.xserver.xkbOptions = "terminate:ctrl_alt_bksp,ctrl:nocaps,eurosign:e";
-  services.xserver.xkbOptions = "terminate:ctrl_alt_bksp,ctrl:nocaps";
+  services.xserver.xkb.layout = "eu";
+  services.xserver.xkb.options = "terminate:ctrl_alt_bksp,ctrl:nocaps";
 
   # Key repeat interval and repeat rate
   services.xserver.autoRepeatInterval = 33;
