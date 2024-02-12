@@ -78,39 +78,8 @@ the created config is only relevant for initial hardware configuration.
   rm hardware-configuration.nix
   ```
 
-- Generate the user configuration. This NixOs configuration creates root and a single, additonal user called "seb". The users are locked. passwd will not work. To set the user passwords:
-  - Create password hashes: `mkpasswd`
-  - Edit /etc/nixos/users.nix:
-    ```nix
-    # User password configuration.
-    { config, ... }:
-    {
-        # Use mkpasswd.
-        users.users."seb".hashedPassword = "abcd";
-        users.users."root".hashedPassword = "efgh";
-    }
-    ```
-- Configure the selection of programs.
+TODO: rework. Not accurate anymore
 
-  - Create `programs.nix` - it imports everything you want to install
-  - Edit /etc/nixos/programs.nix:
-
-    ```nix
-    { config, pkgs, ... }:
-    {
-        imports = [
-            # Install everything
-            ./programs
-
-            # ... or select:
-            ./programs/cli.nix
-            # ...
-        ];
-
-        # Add machine specific things here
-        environment.systemPackages = with pkgs; [ ];
-    }
-    ```
 
 ### NixOS Installation
 
