@@ -24,9 +24,6 @@
 # The tool "nixify" does that for you.
 
 let
-  nix-alien-pkgs = import (builtins.fetchTarball
-    "https://github.com/thiagokokada/nix-alien/tarball/master") { };
-
   # Tiny tool to set LD_LIBRARY_PATH and run the specified command
   nixify = pkgs.writeShellScriptBin "nixify" ''
     LD_LIBRARY_PATH=/run/opengl-driver/lib:$LD_LIBRARY_PATH:/run/current-system/sw/share/nix-ld/lib
@@ -36,18 +33,15 @@ let
 in {
   # Install some tools
   environment.systemPackages = [
-    # Handy tool to find the library dependencies of a binary.
-    # Call `nix-alien-find-libs myapp` to get the list of deps.
-    nix-alien-pkgs.nix-alien
-
     # Call "nixify some commands" to run it in the nix-ld and opengl environment
     nixify
   ];
 
   # Prebuild tools are used in many dev environemnts. For example,
   # electron delivered via npm. To make these work in NixOS, find
-  # their dependencies and add them here. Use
-  # `nix-alien-find-libs ./executable` to get the list.
+  # their dependencies and add them here. To get the list of libs, use:
+  #
+  # nix run github:thiagokokada/nix-alien -- ~/myapp
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     ###########################################################################

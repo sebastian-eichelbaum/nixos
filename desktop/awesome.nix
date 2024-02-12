@@ -4,8 +4,7 @@
 
 { config, lib, pkgs, ... }:
 
-let user = "seb";
-in {
+{
 
   #############################################################################
   # {{{ Awesome
@@ -110,7 +109,7 @@ in {
       #
       # The good thing: if the script is not present, xss-lock does nothing.
       "-n"
-      "/home/${user}/.local/bin/mon-backlight-dimmer"
+      "/home/${config.SysConfig.user.name}/.local/bin/mon-backlight-dimmer"
     ];
   };
 

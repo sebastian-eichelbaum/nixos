@@ -54,23 +54,30 @@ Create the actual layout of '/' to be used by NixOS. Mount the disks accordingal
 ### NixOS Configuration
 
 NixOS has a handy tool to generate a default config. As this repo contains a NixOS configuration already,
-the created config is only relevant for its hardware configuration.
+the created config is only relevant for initial hardware configuration.
 
-- Generate the machine configuration
+- Prepare
   ```sh
   mkdir -p /etc
   cd /etc
   git clone git@github.com:sebastian-eichelbaum/nixos.git
   cd nixos
+  ```
+- Generate the machine configuration, if needed. Usually, the easiest way to get new hardware running is to use one of the already existing machines as a template:
+
+  ```sh
+  # Copy some existing machine and use as template for the new MyMachine
+  cd /etc/nixos/machines && cp someMachineAsTemplate.nix MyMachine.nix
+  # Let NixOS create some hardware config:
   nixos-generate-config --root /mnt --show-hardware-config > hardware-configuration.nix
-  # Choose one of the predefined system setups in hosts. Link or copy:
-  ln -s machines/something.nix machine.nix
-  # Edit machine.nix and make sure the filesystems match the ones in the generated
+
+  # Edit MyMachine.nix and make sure the filesystems match the ones in the generated
   # hardware-configuration.nix. Also check: Kernel Modules, Hostname, ...
   # After stealing the relevant parts from hardware-configuration.nix, delete. It is
   # not needed anymore.
   rm hardware-configuration.nix
   ```
+
 - Generate the user configuration. This NixOs configuration creates root and a single, additonal user called "seb". The users are locked. passwd will not work. To set the user passwords:
   - Create password hashes: `mkpasswd`
   - Edit /etc/nixos/users.nix:
@@ -84,8 +91,10 @@ the created config is only relevant for its hardware configuration.
     }
     ```
 - Configure the selection of programs.
+
   - Create `programs.nix` - it imports everything you want to install
   - Edit /etc/nixos/programs.nix:
+
     ```nix
     { config, pkgs, ... }:
     {

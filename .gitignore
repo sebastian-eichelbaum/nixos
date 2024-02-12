@@ -5,5 +5,8 @@ hardware-configuration.nix
 machine.nix
 users.nix
 
+# Ignore the user's custom config
+configuration.nix
+
 # Do not track the result dir
 result

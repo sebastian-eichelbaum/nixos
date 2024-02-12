@@ -4,10 +4,7 @@
 
 { config, pkgs, ... }:
 
-let
-  name = "Sebastian";
-  user = "seb";
-in {
+{
   # Ensure ZSH install as it is the default shell
   programs.zsh = {
     enable = true;
@@ -43,27 +40,29 @@ in {
     defaultUserShell = pkgs.zsh;
 
     # The user gets its own group
-    groups."${user}" = {
-      name = "${user}";
+    groups."${config.SysConfig.user.name}" = {
+      name = "${config.SysConfig.user.name}";
       gid = 1000;
     };
 
     # Create the user
     users = {
-      "${user}" = {
+      "${config.SysConfig.user.name}" = {
         # Has to be set. This makes the user a non-root-like user. Ensures the
         # home dir is created and the default shell is used.
         isNormalUser = true;
 
-        description = "${name}";
+        description = "${config.SysConfig.user.realName}";
 
-        home = "/home/${user}";
+        hashedPassword = config.SysConfig.user.passHash;
+
+        home = "/home/${config.SysConfig.user.name}";
         homeMode = "755";
         uid = 1000;
 
         # Groups for the user. The "group" is the fmain group and will be the
         # group that owns the home dir.
-        group = "${user}";
+        group = "${config.SysConfig.user.name}";
         extraGroups = [
           # Be a user
           "users"
@@ -80,7 +79,7 @@ in {
           # Allow virtualization 
           "libvirtd"
           "vboxusers"
-        ];
+        ] ++ config.SysConfig.user.extraGroups;
 
         # Overwrite the default shell?
         # shell = pkgs.zsh;
@@ -94,7 +93,7 @@ in {
         #openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
       };
 
-      root = { };
+      root = { hashedPassword = config.SysConfig.root.passHash; };
     };
   };
 }

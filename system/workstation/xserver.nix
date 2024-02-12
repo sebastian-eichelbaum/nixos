@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let user = "seb";
-in {
+{
   # Use awesome as the default for new systems.
   services.xserver.windowManager.awesome.enable = lib.mkDefault true;
 
@@ -37,7 +36,7 @@ in {
         enable = true;
 
         # Use the background of the user
-        background = "/home/${user}/.background-image";
+        background = "/home/${config.SysConfig.user.name}/.background-image";
 
         # Theme
         #greeters.slick.enable = true;
@@ -52,7 +51,7 @@ in {
 
       # Auto Login
       autoLogin.enable = true;
-      autoLogin.user = user;
+      autoLogin.user = config.SysConfig.user.name;
     };
   };
 

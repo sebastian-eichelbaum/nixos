@@ -1,14 +1,13 @@
 # #############################################################################
 # Host/Hardware Setup
 #
-# Host: worky
 # Hardware: Razer Blade Advanced 15, Late 2020
 
 { config, lib, pkgs, ... }:
 
 {
   # The system "name" aka hostname
-  networking.hostName = "worky";
+  networking.hostName = config.SysConfig.hostName;
 
   #############################################################################
   # Filesystem Setup
@@ -69,9 +68,9 @@
   # Enable periodic TRIM on these? Its an nvme ssd that supports it. Check
   # "lsblk --discard" to validate.
   #
-  # Keep in mind: enabling peridic and contiuous TRIM (using discard options
+  # Keep in mind: enabling periodic and continuous TRIM (using discard options
   # in fstab and crypttab/initrd luks) at the same time does not make sense.
-  # Well .. technically. If you forget some "hidden" discard somewhere in the
+  # Well, technically. If you forget some "hidden" discard somewhere in the
   # config, it is easy to miss a disk. And it does not cost you anything,
   # especially since it is run every week or so. Just enable it.
   services.fstrim.enable = true;
@@ -261,11 +260,6 @@
 
     ## ALPM (Active Link Power Management) for SATA. The Card Reader. SATA SSD are also supported.
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
-
-    ## Allow tools that configure razer keyboard and power modes
-    ## See https://www.rzrctrl.com/
-    KERNEL=="hidraw*", ATTRS{idProduct}=="020f|0210|0224|0225|022d|022f|0232|0233|0234|0239|023a|023b|0240|0245|0246|024a|0252|0253|0255|0256|026a|026f|0270|0276|026d|027a|028a|028b|028c|0259|029f|029d|026e|", ATTRS{idVendor}=="1532", MODE="0666", TAG+="uaccess"
-
   '';
 
   #############################################################################
@@ -279,5 +273,8 @@
     ../hardware/logitech-hid.nix
     # Use the Brother scanner
     ../hardware/Brother_ADS-1700W.nix
-   ];
+    # The Razer laptop controls. Allows to setup power states/light/...
+    ../hardware/razer-laptop.nix
+  ];
+
 }
