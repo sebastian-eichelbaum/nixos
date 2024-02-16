@@ -1,28 +1,31 @@
 { config, lib, pkgs, ... }:
 
 #############################################################################
-# Nix-ld: If you want to use binaries that are not "nixified"
+# Nixify: how to make binaries work in NixOS?
+#
+# It is a quite common scenario: you pip, npm, ... install a package that
+# comes with a generic pre-compiled binary. These binaries rely on the
+# Filesystem Hierarchy Standard (FHS). NixOS does provide that.
+#
+# To be able to run binaries on NixOS, there are several options. There
+# is a nice overview on StackOverflow:
+#
+# https://unix.stackexchange.com/questions/522822/different-methods-to-run-a-non-nixos-executable-on-nixos
 #
 #
-# Binaries, either closed source or binaries delivered via another packaging
-# tool like pip, npm, ... search their libs somewhere in /usr/lib - the usual
-# way in most Linux. This does not exist in NixOS.
+# This nix module sets up nix-ld and steam-run to solve the issue:
+#  * nix-ld: It manages linked libraries to be used for binaries. It sets
+#            LD_LIBRARY_PATH so that binaries find all libs they need. It
+#            needs to be configured to know which libs should be made
+#            available.
+#  * steam-run: a very handy tool to execute a binary in a steam runtime
+#               environment - just like a game. Ideal to run Unity binaries
+#               for example. Requires steam to be installed.
 #
-# Libs: Nix-ld can create a dir for us and link the libs from packages in
-#       there. This file defines some very common libs usually used in
-#       desktop environemnts - X, alsa, ...
 #
-# GPU: NixOS created a dir /run/opengl-driver/lib for us that contains the
-#      hardware specific OpenGL, Vulkan, Cuda, OpenCL, ... libs/drivers. It
-#      does not contain the mesa stuff (libGL)
-#
-
-# Most of the time, nix-ld does everything behind the scenes. If not, call
-# your program with a defined LD_LIBRARY_PATH:
-#
-# LD_LIBRARY_PATH=/run/opengl-driver/lib:/run/current-system/sw/share/nix-ld/lib
-# The tool "nixify" does that for you.
-
+# On top of that, it provides a tiny helper script "nixify" that combines
+# the NixOS OpenGL/Vulkan/OpenCL lib location with nix-ld. Most of the time,
+# nix-ld does everything behind the scenes. If not, nixify can help.
 let
   # Tiny tool to set LD_LIBRARY_PATH and run the specified command
   nixify = pkgs.writeShellScriptBin "nixify" ''
@@ -35,6 +38,9 @@ in {
   environment.systemPackages = [
     # Call "nixify some commands" to run it in the nix-ld and opengl environment
     nixify
+
+    # Requires steam
+    pkgs.steam-run
   ];
 
   # Prebuild tools are used in many dev environemnts. For example,
