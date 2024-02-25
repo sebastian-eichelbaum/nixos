@@ -17,10 +17,11 @@
 #  * nix-ld: It manages linked libraries to be used for binaries. It sets
 #            LD_LIBRARY_PATH so that binaries find all libs they need. It
 #            needs to be configured to know which libs should be made
-#            available.
+#            available. (lightweight)
 #  * steam-run: a very handy tool to execute a binary in a steam runtime
 #               environment - just like a game. Ideal to run Unity binaries
-#               for example. Requires steam to be installed.
+#               for example. Requires steam to be installed. (heavyweight but
+#               works nearly always)
 #
 #
 # On top of that, it provides a tiny helper script "nixify" that combines
@@ -67,6 +68,12 @@ in {
     xorg.libXrandr
     xorg.libxcb
     xorg.libXext
+    xorg.libXxf86vm
+    xorg.libXcursor
+    xorg.libXScrnSaver
+    xorg.libXi
+    xorg.libXtst
+    xorg.libxkbfile
     libxkbcommon
     fontconfig.lib
     freetype
@@ -80,9 +87,12 @@ in {
     libGL
     # SHould be in /run/opengl-driver/lib already?!
     # mesa.drivers
+    # vulkan-loader
 
     # Audio
     alsa-lib
+    #libpulseaudio
+    #pipewire
 
     # GTK and Gnome environments
     gtk3
@@ -99,7 +109,19 @@ in {
     cups.lib
     expat
     zlib
+    icu
+    openssl
+    curl
     nspr
+
+    systemdLibs # udev and others
+
+    #fuse3
+    #libunwind
+    #libusb1
+    #libuuid
+    #libxml2
+
   ];
 
 }
