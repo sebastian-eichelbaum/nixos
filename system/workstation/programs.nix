@@ -84,11 +84,8 @@
 
     ]
     # Graphical tools only if the Xserver is enabled
-    ++ (if config.services.xserver.enable then
-      [
-        # parted frontend
-        gparted
-      ]
-    else
-      [ ]);
+    ++ pkgs.lib.optionals config.services.xserver.enable [
+      # parted frontend
+      gparted
+    ];
 }
