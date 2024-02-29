@@ -31,6 +31,7 @@
 
     # Formatter. Very handy for most dev scenarios
     clang-tools_16
+    nodePackages.prettier
 
     # Very nice for big directory comparisons
     meld
@@ -60,9 +61,6 @@
           # openssl_1_1
         ];
     })
-
-    # Nice formatting of C# code
-    clang-tools_16
 
     # Dotnet SDK is required if VS Code C# extensions should be used
     dotnet-sdk_7
