@@ -35,6 +35,7 @@
 
     # Very nice for big directory comparisons
     meld
+    gittyup
 
     ###########################################################################
     # Local coding environemnt basics:
