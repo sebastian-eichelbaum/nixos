@@ -83,7 +83,7 @@
     rofi-pass
 
     # Allow to ask for passwords graphically
-    pinentry-gnome
+    pinentry-gnome3
 
     # Nice screen locker
     xss-lock

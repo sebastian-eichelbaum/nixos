@@ -88,4 +88,13 @@
       # parted frontend
       gparted
     ];
+
+  # On nix, /bin/bash does not exists. As shebang, `#!/usr/bin/env bash` is recommended instead. Unfortunately, we cannot influence this on external scripts written by others.
+  # This links bin/sh to bin/bash to make it work
+  system.activationScripts.binbash = {
+    deps = [ "binsh" ];
+    text = ''
+      ln -sf /bin/sh /bin/bash
+    '';
+  };
 }

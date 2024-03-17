@@ -26,6 +26,10 @@
     firewall = {
       enable = true;
       # Open specific ports in the firewall:
+      allowedTCPPorts = [
+        # Used by Gradio based AI web frontends. Open to allow access in the local network.
+        7860
+      ];
       # allowedTCPPorts = [ ... ];
       # allowedUDPPorts = [ ... ];
     };
