@@ -17,10 +17,10 @@
       src = pkgs.fetchFromGitHub {
         owner = "awesomeWM";
         repo = "awesome";
-        rev = "0e5fc45";
+        rev = "e6f5c7980862b7c3ec6c50c643b15ff2249310cc";
         # Set this. Nix will complain and show the real hash
         #sha256 = "sha256:0000000000000000000000000000000000000000000000000000";
-        sha256 = "sha256-ZFjYKyzQiRgg5uHgMLeex6oOKDrXMhp9dxxHEm2xeH4=";
+        sha256 = "sha256-afviu5b86JDWd5F12Ag81JPTu9qbXi3fAlBp9tv58fI=";
       };
 
       patches = [ ];
