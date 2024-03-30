@@ -28,6 +28,7 @@
     # example. This ensures the lib versions match.
     gcc
     gnumake
+    gdb
 
     # Formatter. Very handy for most dev scenarios
     clang-tools_16
