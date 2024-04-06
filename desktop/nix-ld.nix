@@ -120,7 +120,7 @@ in {
     #libunwind
     #libusb1
     #libuuid
-    #libxml2
+    libxml2
 
   ];
 

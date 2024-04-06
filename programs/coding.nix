@@ -61,6 +61,9 @@
 
           # Pre 2022.3 versions require this:
           # openssl_1_1
+
+          # To ensure unity finds VS Code in its path
+          vscode
         ];
     })
 
