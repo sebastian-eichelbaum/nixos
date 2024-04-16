@@ -25,7 +25,7 @@
   documentation.man.enable = true;
 
   # Install some nix tools.
-  environment.systemPackages = with pkgs; [ nixos-option nix-index nixfmt ];
+  environment.systemPackages = with pkgs; [ nixos-option nix-index nixfmt-classic ];
 
   #############################################################################
   # Nix Base Setup

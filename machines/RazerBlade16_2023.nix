@@ -259,9 +259,9 @@
   services.udev.extraRules = ''
     ## Blacklist autosuspend for some USB devices.
 
-    ## The integrated keyboard
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="0253", ATTR{power/autosuspend_delay_ms}="-1"
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="0253", ATTR{power/control}="on"
+    ## The integrated keyboard. Use lsusb to get the ID for the Razer device.
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="029f", ATTR{power/autosuspend_delay_ms}="-1"
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1532", ATTR{idProduct}=="029f", ATTR{power/control}="on"
 
     ## ALPM (Active Link Power Management) for SATA. The Card Reader. SATA SSD are also supported.
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
@@ -282,4 +282,12 @@
     ../hardware/razer-laptop.nix
   ];
 
+  # Apply the correct color profile (icm,icc) for this device
+  services.xserver.displayManager.sessionCommands = ''
+    # load if present
+    profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16_2023_official.icm
+    if [ -f $profile ]; then
+      xcalib -output eDP-0 $profile
+    fi
+  '';
 }
