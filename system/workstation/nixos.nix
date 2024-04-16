@@ -73,9 +73,9 @@
     # Automatic garbage collection ever week
     gc = {
       automatic = true;
-      dates = "daily";
+      dates = "weekly";
       # Delete all generations older than x,
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 14d";
     };
   };
 

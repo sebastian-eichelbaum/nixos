@@ -108,6 +108,8 @@
 
     xclip # clipboard provider. Needed for vim/greenclip/...
     xdotool # Programmatically perform X ops. Needed for rofi-pass/...
+
+    xcalib # handy tool to set display color calibration files.
   ];
 
   # Disable the annoying bell.
