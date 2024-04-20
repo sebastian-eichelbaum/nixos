@@ -184,14 +184,20 @@
 
   powerManagement.enable = true;
 
+  # The kernel sets this to max_performance by default. This machine has two SSD,
+  # so setting a more power saving setting can save a few watts!
+  powerManagement.scsiLinkPolicy = "med_power_with_dipm";
+
   # Makes better use of eficiency cores on newer intel machines
   services.thermald.enable = true;
+  # services.thermald.configFile = "";
 
   # Enable Wifi PowerSave mode. Good idea?
   # networking.networkmanager.wifi.powersave = true;
 
   # Be warned. Enabling this activates a lot of power saving features but can
-  # also mess up laptop keybords and mouse.
+  # also mess up laptop keybords and mouse. This config uses udev rules to be
+  # more specific.
   # powerManagement.powertop.enable = true;
 
   # P-States magic makes this superfluous.
@@ -265,6 +271,14 @@
 
     ## ALPM (Active Link Power Management) for SATA. The Card Reader. SATA SSD are also supported.
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
+
+    ## PCI PM
+    # blacklist for pci runtime power management for these devices:
+    # SUBSYSTEM=="pci", ATTR{vendor}=="0x1234", ATTR{device}=="0x1234", ATTR{power/control}="on", GOTO="pci_pm_end"
+    # Enable runtim PM for all other devices
+    SUBSYSTEM=="pci", ATTR{power/control}="auto"
+    LABEL="pci_pm_end"
+
   '';
 
   #############################################################################
@@ -285,7 +299,7 @@
   # Apply the correct color profile (icm,icc) for this device
   services.xserver.displayManager.sessionCommands = ''
     # load if present
-    profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16_2023_official.icm
+    profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16.icm
     if [ -f $profile ]; then
       xcalib -output eDP-0 $profile
     fi
