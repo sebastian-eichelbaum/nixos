@@ -21,7 +21,7 @@
     fsType = "ext4";
 
     # No fsck
-    noCheck = true;
+    noCheck = false;
 
     # Mount options
     options = [
@@ -38,7 +38,7 @@
     fsType = "ext4";
 
     # No fsck
-    noCheck = true;
+    noCheck = false;
 
     # Mount options
     options = [
