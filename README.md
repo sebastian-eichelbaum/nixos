@@ -78,11 +78,27 @@ the created config is only relevant for initial hardware configuration.
   rm hardware-configuration.nix
   ```
 
-TODO: rework. Not accurate anymore
+- Create the local configuration
 
+  ```sh
+  cd /etc/nixos
+  cp configuration.example.nix configuration.nix
+
+  # Edit configuration.nix. It is the entry point and refers to
+  # your MyMachine.nix, the desired applications, ...
+  # WARNING: do not commit to git. It contains password hashes.
+  vim configuration.nix
+  ```
 
 ### NixOS Installation
 
 - (Optional but recommended) Update to the unstable channel before install
   - `nix-channel --add https://nixos.org/channels/nixos-unstable nixos`
 - `nixos-install`
+
+## Recipes
+
+### Re-install the bootloader
+
+- Mount root and boot as above.
+- Refer to https://nixos.wiki/wiki/Bootloader on how to install the bootloader
