@@ -21,8 +21,12 @@
     # A gnome-based minimal desktop with AwesomeWM
     ./desktop
 
-    # The minimal set of programs/services I use on all of my systems. cli baseline, c
-    # oding tools, gaming, virtualization, ...
+    # The minimal set of programs/services I use on all of my systems. cli baseline,
+    # coding tools, gaming, virtualization, ...
     ./programs
+
+    # A set of fixes and temporary solutions to make something work or fix up a package.
+    # This should contain only a few files and should be updated regularly.
+    ./quirks
   ];
 }

@@ -102,3 +102,12 @@ the created config is only relevant for initial hardware configuration.
 
 - Mount root and boot as above.
 - Refer to https://nixos.wiki/wiki/Bootloader on how to install the bootloader
+
+### Fix-up a package/overlays
+
+It happens quite often that a nixpkg script uses old download urls, older git versions of
+a package and so on. Overlays allow us to modify an existing nixpkg specification.
+
+There are some examples provided:
+
+- [quirks/example.changeSrcURL.nix](quirks/example.changeSrcURL.nix) - change the URL where to download the source/proprietary package from.
