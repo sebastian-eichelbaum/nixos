@@ -45,14 +45,19 @@
         greeters.enso.blur = true;
       };
 
-      # The default session if the user has not yet made a decision
-      #defaultSession = "gnome-xorg";
-      defaultSession = "none+awesome";
-
-      # Auto Login
-      autoLogin.enable = true;
-      autoLogin.user = config.SysConfig.user.name;
     };
+  };
+
+  # Configure Login and display manager
+  services.displayManager = {
+    # Auto Login
+    autoLogin.enable = true;
+    autoLogin.user = config.SysConfig.user.name;
+
+    # The default session if the user has not yet made a decision
+    #defaultSession = "gnome-xorg";
+    defaultSession = "none+awesome";
+
   };
 
   #############################################################################
