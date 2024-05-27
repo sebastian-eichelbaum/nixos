@@ -98,7 +98,7 @@
 
   boot = {
     # Kernel parameters
-    kernelParams = [ "i915.fastboot=1" ];
+    kernelParams = [ "i915.fastboot=1" "button.lid_init_state=open" ];
 
     # Initial ramdisk setup
     initrd = {
@@ -273,8 +273,10 @@
     ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="med_power_with_dipm"
 
     ## PCI PM
+
     # blacklist for pci runtime power management for these devices:
     # SUBSYSTEM=="pci", ATTR{vendor}=="0x1234", ATTR{device}=="0x1234", ATTR{power/control}="on", GOTO="pci_pm_end"
+
     # Enable runtim PM for all other devices
     SUBSYSTEM=="pci", ATTR{power/control}="auto"
     LABEL="pci_pm_end"

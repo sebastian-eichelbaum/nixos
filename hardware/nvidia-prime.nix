@@ -59,9 +59,9 @@
 
   # As mentioned above, Cards below RTX 3000 require this module parameter
   # explicitly to enable proper power management.
-  boot.extraModprobeConfig = ''
-    options nvidia NVreg_DynamicPowerManagement=0x02
-  '';
+  #boot.extraModprobeConfig = ''
+  #  options nvidia NVreg_DynamicPowerManagement=0x02
+  #'';
 
   #############################################################################
   # Specialization to boot the NVIDIA as the primary GPU
