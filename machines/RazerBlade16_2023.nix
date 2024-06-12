@@ -98,7 +98,14 @@
 
   boot = {
     # Kernel parameters
-    kernelParams = [ "i915.fastboot=1" "button.lid_init_state=open" ];
+    kernelParams = [
+      "i915.fastboot=1"
+      "button.lid_init_state=open"
+
+      # This makes some games perform better. But it is hard to find information on
+      # what this actually does and how it affects other processes/the system
+      # "split_lock_detect=off"
+    ];
 
     # Initial ramdisk setup
     initrd = {

@@ -38,19 +38,31 @@
   # Direnv: allows to automatically activate environemnts like devbox when
   #         cd-ing into a dir.
   #         Add .envrc to a dir and it will be parsed automatically.
-  #
-  # It requires some config though. Add a direnv.toml to ~/.config/direnv and
-  # refer to the man page.
 
   programs.direnv = {
     enable = true;
+    # Less noisy
     silent = true;
+    # Faster, cached and persistent use_nix/use_flake. This keeps installed
+    # shells even after garbage collection has been run.
+    nix-direnv.enable = true;
   };
 
-  # WARNING: currently, ~/.config/direnv/direnv.toml is ignored in NixOS. To
-  #          make this work, you have to set DIRENV_CONFIG:
-  environment.shellInit = ''
-    DIRENV_CONFIG="$HOME/.config/direnv"
-  '';
+  # Nixos rewrites DIRENV_CONFIG to /etc/direnv - this causes ~/.config/direnv/direnv.toml
+  # not being found. We can configure some common options in etc though:
+  environment.etc = {
+    # Creates /etc/nanorc
+    "direnv/direnv.toml" = {
+      text = ''
+        [global]
+        warn_timeout = "3m"
 
+        [whitelist]
+        prefix = [ "~/Projekte", "~/Projects" ]
+      '';
+
+      # The UNIX file mode bits
+      mode = "0444";
+    };
+  };
 }
