@@ -40,7 +40,16 @@
           ${pkgs.systemd}/bin/systemctl --user start picom.service
       '';
     };
-
   };
 
+  #############################################################################
+  # Gamescope support
+  #
+
+  # Has issues with NVIDIA drivers. Disabled for now.
+
+  # Gamescope is a tiny compositor to run games in, allowing to spoof
+  # resolutions and limit FPS for games that do not support that.
+  # programs.gamescope.enable = true;
+  # programs.gamescope.capSysNice = true;
 }
