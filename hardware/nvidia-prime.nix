@@ -21,8 +21,8 @@
   hardware.nvidia = {
     # Force the use of an older NVIDIA driver?
     #
-    # Newer drivers cause kernel panics, crash unity regularly and more.
-    # TODO: check regularly
+    # The 550 series of drivers causes issues (crashes, freezes, ...) - see
+    # https://forums.developer.nvidia.com/t/series-550-freezes-laptop/284772/192
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       version = "535.154.05";
       sha256_64bit = "sha256-fpUGXKprgt6SYRDxSCemGXLrEsIA6GOinp+0eGbqqJg=";
