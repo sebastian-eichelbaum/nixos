@@ -177,7 +177,7 @@
   hardware.cpu.amd.updateMicrocode = false;
 
   # use intel+nvidia vaapi. NOTE:
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     intel-media-driver
     nvidia-vaapi-driver
   ];

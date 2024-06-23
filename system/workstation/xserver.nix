@@ -66,10 +66,8 @@
 
   # Enable OpenGL by default.
   # Right now, this also covers vdpau and opencl. NOT covered
-  hardware.opengl = {
+  hardware.graphics = {
     enable = lib.mkDefault true;
-    driSupport = lib.mkDefault true;
-    driSupport32Bit = lib.mkDefault true; # Needed for steam
 
     # OpenCL and vdpau are enabled by default too. Use:
     #  * nix-shell -p vdpauinfo --run vdpauinfo
