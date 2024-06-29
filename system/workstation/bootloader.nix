@@ -2,7 +2,7 @@
 
 {
   # Enable Systemd in initrd. This, for once, brings up plymouth in stage 1 and
-  # allows for some more LUKS specific things at stage 1 (like keyfile from 
+  # allows for some more LUKS specific things at stage 1 (like keyfile from
   # USB/Yubikey)
   boot.initrd.systemd.enable = true;
 
@@ -22,7 +22,7 @@
     # Timeout - must be > 0, even if the menu is hidden to make "shift" detectable
     timeout = 1;
 
-    # Use a seperate EFI partition mounted into boot. Requires GRUB. 
+    # Use a seperate EFI partition mounted into boot. Requires GRUB.
     # efiSysMountPoint = "/boot/efi";
 
     # Grub as boot loader
@@ -44,12 +44,13 @@
       set timeout_style=hidden
     '';
 
-    # Ensure we clear out old stuff relatively fast.
-    grub.configurationLimit = 5;
-    systemd-boot.configurationLimit = 5;
+    # Do not list toooo old generations. This does not affect the duration of how
+    # long the generations exists. This is up to the garbage collection config.
+    grub.configurationLimit = 10;
+    systemd-boot.configurationLimit = 10;
   };
 
-  # Some common kernel parameters. Just use it everywhere. You cant read the 
+  # Some common kernel parameters. Just use it everywhere. You cant read the
   # fast scrolling text anyways.
   boot.kernelParams = [
     # Less talking
@@ -58,7 +59,7 @@
     # Fastboot mode
     "fastboot"
 
-    # Disable the vendor logo because it stays there if booted in the 
+    # Disable the vendor logo because it stays there if booted in the
     # NVIDIA mode (iGPU buffer is never cleared).
     "bgrt_disable"
   ];
