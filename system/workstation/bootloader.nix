@@ -77,16 +77,19 @@
   boot.plymouth.enable = true;
 
   # Nice themes: https://github.com/adi1090x/plymouth-themes
-  boot.plymouth.theme = "deus_ex";
+  #boot.plymouth.theme = "deus_ex";
+  boot.plymouth.theme = "spinner_alt";
   boot.plymouth.themePackages = [
     # Only install these. Installing all consumes quite some space
     (pkgs.adi1090x-plymouth-themes.override {
-      selected_themes = [ "deus_ex" ];
+      selected_themes = [
+        #"deus_ex",
+        "spinner_alt"
+      ];
     })
   ];
   # Simplistic:
-  #boot.plymouth.theme = "breeze";
+  # boot.plymouth.theme = "breeze";
   # BGRT (Vendor image). Unfortunately, password prompt looks strange:
   #boot.plymouth.theme = "bgrt";
-
 }

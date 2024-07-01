@@ -145,17 +145,16 @@
           # Enable trim support
           allowDiscards = true;
 
-          
           # Decrypt using a key file on a USB stick.
           # Create the key (or use the same) as shown above. Write to a stick:
           #   sudo dd if=disk.key of=/dev/sdc
           keyFileSize = 4096;
           keyFileTimeout = 5; # Still allow PW prompt
-          
+
           # To locate where the file is: either dd it to a partition (makes the
           # rest of the device usable) or to the device itself. 
           # Specify the correct device or partition here
-          keyFile = "/dev/disk/by-id/usb-Intenso_Micro_Line_23042277610577-0:0-part2";
+          keyFile = "/dev/disk/by-id/usb-Intenso_Micro_Line_23042277610577-0:0-part3";
         };
       };
     };

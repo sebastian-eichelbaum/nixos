@@ -69,6 +69,9 @@
   hardware.graphics = {
     enable = lib.mkDefault true;
 
+    # For steam and some proprietary games
+    enable32Bit = true;
+
     # OpenCL and vdpau are enabled by default too. Use:
     #  * nix-shell -p vdpauinfo --run vdpauinfo
     #  * nix-shell -p opencl-info --run opencl-info
