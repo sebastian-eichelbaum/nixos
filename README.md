@@ -6,7 +6,7 @@ This creates a minimal encrypted dev machine, using X+AwesomeWM for windowing; n
 
 Works well with my dotfiles: https://github.com/sebastian-eichelbaum/dotfiles
 
-## NixOS Installation
+## NixOS Installation for workstations
 
 ### Disk Setup
 

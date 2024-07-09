@@ -5,13 +5,20 @@
 { config, lib, pkgs, ... }:
 
 {
+
+  # Ensure that all runtimes are enabled. Neovim itself is enabled as system default
+  # editor already.
+  programs.neovim = {
+    withNodeJs = true;
+    withPython3 = true;
+    withRuby = true;
+  };
+
   environment.systemPackages = with pkgs; [
 
     ###########################################################################
     # Editors
     #
-
-    # NOTE: vim/neovim are configured by the NixOS system config
 
     # VS Code is working well with unity and has good C# support out of the box
     vscode
@@ -19,6 +26,8 @@
     ###########################################################################
     # Standard tools
     #
+
+    git-lfs
 
     # NOTE: do not install any compiler here. Use devbox/devenv/shell.nix for
     # projects instead.
@@ -53,8 +62,7 @@
     # Some older unity editor versions need an old openssl version
     (pkgs.unityhub.override {
       extraLibs = pkgs:
-        with pkgs;
-        [
+        with pkgs; [
           # Without this, the vulkan libs will not be found -> no vulkan
           # renderer in unity (required for HDRP)
           vulkan-loader

@@ -6,9 +6,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  # The system "name" aka hostname
-  networking.hostName = config.SysConfig.hostName;
-
   #############################################################################
   # Filesystem Setup
   #
@@ -96,6 +93,9 @@
   # Kernel and initrd Setup
   #
 
+  # WHich kernel to use? Zen is quite optimized for desktop use
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+
   boot = {
     # Kernel parameters
     kernelParams = [
@@ -152,9 +152,10 @@
           keyFileTimeout = 5; # Still allow PW prompt
 
           # To locate where the file is: either dd it to a partition (makes the
-          # rest of the device usable) or to the device itself. 
+          # rest of the device usable) or to the device itself.
           # Specify the correct device or partition here
-          keyFile = "/dev/disk/by-id/usb-Intenso_Micro_Line_23042277610577-0:0-part3";
+          keyFile =
+            "/dev/disk/by-id/usb-Intenso_Micro_Line_23042277610577-0:0-part3";
         };
       };
     };
@@ -201,18 +202,37 @@
 
   # Makes better use of eficiency cores on newer intel machines
   services.thermald.enable = true;
-  # services.thermald.configFile = "";
 
-  # Enable Wifi PowerSave mode. Good idea?
+  # P-States magic makes this superfluous.
+  # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  # Nix enables the power profiles tool by default. Unfortunately, it does not
+  # switch automatically on bat/ac.
+  # See: powerprofilesctl
+  # services.power-profiles-daemon.enable = false;
+
+  services.cpupower-gui.enable = true;
+  #services.auto-cpufreq = {
+  #    enable = true;
+  #    settings = {
+  #      battery = {
+  #        governor = "powersave";
+  #        turbo = "never";
+  #      };
+  #      charger = {
+  #        governor = "performance";
+  #        turbo = "auto";
+  #      };
+  #    };
+  #  };
+
+  # Enable Wifi PowerSave mode. Good idea? Any real use?
   # networking.networkmanager.wifi.powersave = true;
 
   # Be warned. Enabling this activates a lot of power saving features but can
   # also mess up laptop keybords and mouse. This config uses udev rules to be
   # more specific.
   # powerManagement.powertop.enable = true;
-
-  # P-States magic makes this superfluous.
-  # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   boot = {
     /* # i915 Module options:
@@ -293,6 +313,17 @@
     LABEL="pci_pm_end"
 
   '';
+
+  # Undervolting - Be warned: do not overdo. Test the first on a shell:
+  # sudo undervolt --core -100 --cache -100 --uncore -100 --gpu -50 --analogio -50
+  services.undervolt = {
+    enable = true;
+
+    uncoreOffset = -100;
+    coreOffset = -100;
+    analogioOffset = -50;
+    gpuOffset = -50;
+  };
 
   #############################################################################
   # Other Host Configuration Modules

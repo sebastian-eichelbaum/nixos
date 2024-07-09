@@ -37,6 +37,11 @@
     ocrmypdf
     pandoc
 
+    # Partitioning and file system stuff
+    gparted
+    exfatprogs
+    ntfs3g
+
     ###########################################################################
     # Communication tools
     #

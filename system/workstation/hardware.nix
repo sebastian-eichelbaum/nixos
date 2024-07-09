@@ -5,10 +5,6 @@
   # Common Base Setup
   #
 
-  # Hardware Platform. This is a default and can be modified in your machine-
-  # specific configs.
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
   # Make the hardware clock local time. This fixes the time difference issues with windows
   time.hardwareClockInLocalTime = true;
 

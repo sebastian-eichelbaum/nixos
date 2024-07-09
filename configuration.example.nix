@@ -21,6 +21,9 @@
     # The hostname
     hostName = "worky";
 
+    # The platform this is running on
+    hostPlatform = "x86_64-linux";
+
     ###########################################################################
     # Users
     #

@@ -25,7 +25,11 @@
   documentation.man.enable = true;
 
   # Install some nix tools.
-  environment.systemPackages = with pkgs; [ nixos-option nix-index nixfmt-classic ];
+  environment.systemPackages = with pkgs; [
+    nixos-option
+    nix-index
+    nixfmt-classic
+  ];
 
   #############################################################################
   # Nix Base Setup
@@ -34,30 +38,7 @@
   # Generally allow unfree software
   nixpkgs.config.allowUnfree = true;
   # Hardware Platform
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  #############################################################################
-  # Systemd & Journal  Setup
-  #
-
-  # Set the timeout of SystemD to 30s. Default is 90s.
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=30s
-  '';
-
-  # Journal keeps growing and growing. Limit.
-  services.journald.extraConfig = "SystemMaxUse=100M";
-  systemd.coredump = {
-    # Needs to be enabled or the kernel throws the dumps into the process directory
-    enable = true;
-    # Tell systemd where to keep those: none - disabled, journal - store alongside the journal, external - store in /var/lib/systemd/coredump.
-    # Journal is usually a good choice. The Journal rotation rules apply so we do not store hundresd
-    # MaxUse defines the max size of dump storage if "external"
-    extraConfig = ''
-      Storage=journal
-      MaxUse=256M
-    '';
-  };
+  nixpkgs.hostPlatform = config.SysConfig.hostPlatform;
 
   #############################################################################
   # Nix Householding Setup
@@ -90,4 +71,19 @@
     # Flakes support
     "flakes"
   ];
+
+  #############################################################################
+  # Quirks and hacks
+  #
+
+  # On nix, /bin/bash does not exists. As shebang, `#!/usr/bin/env bash` is recommended instead.
+  # Unfortunately, we cannot influence this on external scripts written by others.
+  #
+  # This links bin/sh to bin/bash to make it work
+  system.activationScripts.binbash = {
+    deps = [ "binsh" ];
+    text = ''
+      ln -sf /bin/sh /bin/bash
+    '';
+  };
 }

@@ -1,4 +1,5 @@
-# A common workstation setup. Installs NixOS and all the desktop tools, productivity and gaming stuff.
+# A common server setup. Installs NixOS without X and all the software. Most things are NOT
+# insatled by default. You have to be selective in your config.
 
 { config, ... }:
 
@@ -7,23 +8,22 @@
   # The list of other modules to import. This is the spot where you can be
   # more or less specific on which modules get loaded.
   imports = [
-    # This is a workstation - to the common workstation setup
-    ./system/workstation
+    # This is a server
+    ./system/server
 
     ###########################################################################
     # Modules
     # - The list of other modules to import. This is the spot where you can be
     #   more or less specific on which modules get loaded.
 
-    # The minimal set of programs/services I use on all of my systems. cli baseline,
-    # coding tools, gaming, virtualization, ...
-    ./programs
+    # The minimal set of programs/services
+    #./programs
 
     # A set of fixes and temporary solutions to make something work or fix up a package.
     # This should contain only a few files and should be updated regularly.
-    ./quirks
+    # ./quirks
 
     # A set of services to activate.
-    ./services/syncthing.nix
+    # ./services/syncthing.nix
   ];
 }

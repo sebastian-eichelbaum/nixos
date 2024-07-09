@@ -21,10 +21,11 @@
       description = "System hostname";
     };
 
-    SysConfig.machine = lib.mkOption {
+    SysConfig.hostPlatform = lib.mkOption {
       type = lib.types.str;
       description =
-        "The Nix module that declares the machine itself. Hardware, boot, harddisk setup, ...";
+        "The platform of this machine. Usually x86_64-linux. This is used for nixpkgs ...";
+      default = "x86_64-linux";
     };
 
     ###########################################################################

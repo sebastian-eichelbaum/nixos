@@ -88,6 +88,9 @@
     # Nice screen locker
     xss-lock
     i3lock-fancy-rapid
+
+    # Power monitor
+    powertop
   ];
 
   # Make kitty the default for those that respect the TERMINAL variable
