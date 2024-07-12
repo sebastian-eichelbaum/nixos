@@ -50,11 +50,6 @@
     # file. Avoid fiddling in here. The defaults are SAFE defaults.
   };
 
-  # Ensure all terminfo are installed to avoid ssh-ing into a machine that
-  # does not undersatdn your terminal. I.e. kitty uses zterm-kitty that would
-  # trigger an invalid term definition alert.
-  environment.enableAllTerminfo = true;
-
   #############################################################################
   # Others
   #
