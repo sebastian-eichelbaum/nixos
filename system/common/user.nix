@@ -82,10 +82,15 @@
 
         # Default public ssh keys can be specified that are allowed to log in via
         # SSH.
-        #openssh.authorizedKeys.keys = [ "ssh-dss AAAAB3Nza... alice@foobar" ];
+        openssh.authorizedKeys.keys = config.SysConfig.authorizedKeys
+          ++ config.SysConfig.user.authorizedKeys;
       };
 
-      root = { hashedPassword = config.SysConfig.root.passHash; };
+      root = {
+        hashedPassword = config.SysConfig.root.passHash;
+        openssh.authorizedKeys.keys = config.SysConfig.authorizedKeys
+          ++ config.SysConfig.root.authorizedKeys;
+      };
     };
   };
 }

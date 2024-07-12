@@ -28,6 +28,15 @@
       default = "x86_64-linux";
     };
 
+    SysConfig.authorizedKeys = lib.mkOption {
+      type = lib.types.listOf (lib.types.str);
+      default = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb seb@worky"
+      ];
+      description =
+        "SSH public keys that are authorized by default for the main user and root. This ensures that you can log into that machine.";
+    };
+
     ###########################################################################
     # Main User
     #
@@ -56,15 +65,32 @@
         default = [ ];
         description = "The main user's additional groups.";
       };
+
+      authorizedKeys = lib.mkOption {
+        type = lib.types.listOf (lib.types.str);
+        default = [ ];
+        description =
+          "SSH public keys that are authorized by default for this user. Merged with the top-level authorizedKeys.";
+      };
     };
 
     ###########################################################################
     # Root user
     #
 
-    SysConfig.root.passHash = lib.mkOption {
-      type = lib.types.str;
-      description = "The root user's password hash. Use mkpasswd to generate.";
+    SysConfig.root = {
+      passHash = lib.mkOption {
+        type = lib.types.str;
+        description =
+          "The root user's password hash. Use mkpasswd to generate.";
+      };
+
+      authorizedKeys = lib.mkOption {
+        type = lib.types.listOf (lib.types.str);
+        default = [ ];
+        description =
+          "SSH public keys that are authorized by default for this user. Merged with the top-level authorizedKeys.";
+      };
     };
 
     ###########################################################################

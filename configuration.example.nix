@@ -2,10 +2,10 @@
 #
 # This file is not in git and contains your setup and some secrets.
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  # Configure YOUR system in here. Check `system/SysConfig.nix` for a complete 
+  # Configure YOUR system in here. Check `system/SysConfig.nix` for a complete
   # list of options and their description.
   SysConfig = {
 
@@ -28,6 +28,14 @@
     # Users
     #
 
+    # Add these keys to the list of authorized keys for the created user and
+    # root. This ensures that the listed users can log into that machine. A
+    # default to my current workstation is set. Extend using lib.mkOptionDefault:
+    authorizedKeys = lib.mkOptionDefault [
+      # Add more ssh public keys:
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb seb@worky"
+    ];
+
     # The single main user:
     user = {
       realName = "Sebastian";
@@ -38,8 +46,12 @@
       # Use mkpasswd. (Considered a secret!)
       passHash = "abcdefghijklmnopqrstuvwxyz";
 
-      # Additonal user groups. Also check system/user.nix
+      # Additional user groups. Also check system/user.nix
       extraGroups = [ ];
+
+      # Add ssh pub keys as authorized keys for this user. Will be merged with the 
+      # global authorizedKeys value.
+      authorizedKeys = [ ];
     };
 
     # Use mkpasswd. (Considered a secret!)
