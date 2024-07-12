@@ -88,6 +88,7 @@
 
       root = {
         hashedPassword = config.SysConfig.root.passHash;
+
         openssh.authorizedKeys.keys = config.SysConfig.authorizedKeys
           ++ config.SysConfig.root.authorizedKeys;
       };

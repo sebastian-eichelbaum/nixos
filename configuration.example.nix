@@ -28,10 +28,8 @@
     # Users
     #
 
-    # Add these keys to the list of authorized keys for the created user and
-    # root. This ensures that the listed users can log into that machine. A
-    # default to my current workstation is set. Extend using lib.mkOptionDefault:
-    authorizedKeys = lib.mkOptionDefault [
+    # Add these keys to the list of authorized keys for the created user&root.
+    authorizedKeys = [
       # Add more ssh public keys:
       # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb seb@worky"
     ];
@@ -55,7 +53,10 @@
     };
 
     # Use mkpasswd. (Considered a secret!)
-    root = { passHash = "abcdefghijklmnopqrstuvwxyz"; };
+    root = {
+      passHash = "abcdefghijklmnopqrstuvwxyz";
+      authorizedKeys = [ ];
+    };
 
     ###########################################################################
     # Features

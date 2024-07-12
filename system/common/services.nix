@@ -47,7 +47,7 @@
     settings.PasswordAuthentication = false;
 
     # Should root be allowed to ssh into the machine?
-    settings.PermitRootLogin = "no"; # "prohibit-password"
+    settings.PermitRootLogin = "prohibit-password"; # "no"
 
     # NOTE: To modify Kex/Cipher/HostKey algorithms, check the quirks/Brother
     # file. Avoid fiddling in here. The defaults are SAFE defaults.

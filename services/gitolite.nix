@@ -13,8 +13,7 @@
 
     # The initiallky authorized_keys entry for the git user. After setup,
     # gitolite manages the authorized_keys for us.
-    adminPubkey =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb seb@worky";
+    adminPubkey = builtins.elemAt config.SysConfig.authorizedKeys 0;
 
     # Have a specific user for this
     user = "git";
