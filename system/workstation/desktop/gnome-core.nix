@@ -94,8 +94,6 @@
       gnome-photos
       # Useless image viewer
       loupe
-    ])
-    ++ (with pkgs.gnome; [
       baobab # disk usage analyzer
       cheese # photo booth
       #eog         # image viewer
@@ -112,17 +110,21 @@
       gnome-terminal
       gnome-calculator
       gnome-calendar
+
+      gnome-screenshot
+      gnome-disk-utility
+      gnome-system-monitor
+
+    ]) ++ (with pkgs.gnome; [
       gnome-characters
+
       gnome-clocks
       gnome-contacts
-      #gnome-font-viewer
       gnome-logs
+      #gnome-font-viewer
       gnome-maps
       gnome-music
-      gnome-screenshot
-      gnome-system-monitor
       gnome-weather
-      gnome-disk-utility
       pkgs.gnome-connections
     ]);
 
@@ -139,10 +141,10 @@
     # gnome.gnome-tweaks
 
     # gsettings editor
-    gnome.dconf-editor
+    dconf-editor
 
     # Support python-based Nautilus extensions
-    gnome.nautilus-python
+    nautilus-python
 
     # Allows to open an arbitrary terminal instead of kgx (gnome terminal)
     # Configure via
@@ -150,7 +152,7 @@
     nautilus-open-any-terminal
 
     # much more useful in comparison to loupe
-    gnome.eog
+    eog
   ];
 
   # Required for some apps to work (to be able to query settings)
