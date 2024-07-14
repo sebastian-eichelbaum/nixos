@@ -28,7 +28,6 @@
       # Get stuff onto and from the machine
       wget
       rsync
-      git
 
       # Baseline for most scripts. Do not remove or change!
       bash
@@ -44,6 +43,13 @@
       # We need to ensure an editor is installed or editing the config would not be possible.
       vim
     ];
+
+  # Git is mandatory on all systems:
+  programs.git = {
+    enable = true;
+    # Modern git uses main instead of master
+    config = { init = { defaultBranch = "main"; }; };
+  };
 
   #############################################################################
   # Editor
