@@ -338,6 +338,8 @@
     ../hardware/Brother_ADS-1700W.nix
     # The Razer laptop controls. Allows to setup power states/light/...
     ../hardware/razer-laptop-control.nix
+    # sof-audio speaker fix. Without this, the laptop does not play sound via speakers.
+    ../quirks/snd_sof_speakerfix.nix
   ];
 
   # Apply the correct color profile (icm,icc) for this device
