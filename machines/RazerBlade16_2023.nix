@@ -93,8 +93,8 @@
   # Kernel and initrd Setup
   #
 
-  # WHich kernel to use? Zen is quite optimized for desktop use
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  # Which kernel to use? Zen is quite optimized for desktop use
+  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   boot = {
     # Kernel parameters
@@ -337,7 +337,7 @@
     # Use the Brother scanner
     ../hardware/Brother_ADS-1700W.nix
     # The Razer laptop controls. Allows to setup power states/light/...
-    ../hardware/razer-laptop.nix
+    ../hardware/razer-laptop-control.nix
   ];
 
   # Apply the correct color profile (icm,icc) for this device

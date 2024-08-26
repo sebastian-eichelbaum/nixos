@@ -4,7 +4,8 @@
   # Nice daemon and command-line tool to configure the power states, fans & lights of Razer laptops.
   imports = [
     (builtins.getFlake
-      "github:Razer-Linux/razer-laptop-control-no-dkms").nixosModules.default
+      # The last rev without GUI
+      "github:Razer-Linux/razer-laptop-control-no-dkms?rev=2a2a87cf1f781ba780a299e39f8876ab45542c9e").nixosModules.default
   ];
   services.razer-laptop-control.enable = true;
 
