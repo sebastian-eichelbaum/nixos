@@ -44,21 +44,19 @@
     gnumake
     gdb
 
-    # Formatter. Very handy for most dev scenarios
-    clang-tools_16
+    # Formatters, linters and LSP
+    clang-tools
+    cmake-format
+    cmake-language-server
+    typescript-language-server
     nodePackages.prettier
+    stylua
+    nixfmt-classic
+    beautysh
 
     # Very nice for big directory comparisons
     meld
     gittyup
-
-    ###########################################################################
-    # Local coding environemnt basics:
-
-    devbox
-
-    # Devenv recommends cachix as everything is build from source.
-    #(import (fetchTarball https://install.devenv.sh/latest)).default
 
     ###########################################################################
     # Development: Unity

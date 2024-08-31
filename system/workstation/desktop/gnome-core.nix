@@ -86,47 +86,44 @@
   };
 
   # Exclude all those nasty gnome apps:
-  environment.gnome.excludePackages =
-    # Some packages are not part of pkgs.gnome.
-    (with pkgs; [
-      gnome-tour
-      gnome-text-editor
-      gnome-photos
-      # Useless image viewer
-      loupe
-      baobab # disk usage analyzer
-      cheese # photo booth
-      #eog         # image viewer
-      epiphany # web browser
-      # gedit # text editor
-      simple-scan # document scanner
-      #totem       # video player
-      yelp # help viewer
-      #evince      # document viewer
-      #file-roller # archive manager
-      geary # email client
-      # seahorse # password manager
-      # these should be self explanatory
-      gnome-terminal
-      gnome-calculator
-      gnome-calendar
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    gnome-text-editor
+    gnome-photos
+    # Useless image viewer
+    loupe
+    baobab # disk usage analyzer
+    cheese # photo booth
+    #eog         # image viewer
+    epiphany # web browser
+    # gedit # text editor
+    simple-scan # document scanner
+    #totem       # video player
+    yelp # help viewer
+    #evince      # document viewer
+    #file-roller # archive manager
+    geary # email client
+    # seahorse # password manager
+    # these should be self explanatory
+    gnome-terminal
+    gnome-calculator
+    gnome-calendar
 
-      gnome-screenshot
-      gnome-disk-utility
-      gnome-system-monitor
+    gnome-screenshot
+    gnome-disk-utility
+    gnome-system-monitor
 
-    ]) ++ (with pkgs.gnome; [
-      gnome-characters
+    gnome-characters
+    gnome-clocks
+    gnome-contacts
+    gnome-logs
+    #gnome-font-viewer
+    gnome-maps
+    gnome-music
+    gnome-weather
 
-      gnome-clocks
-      gnome-contacts
-      gnome-logs
-      #gnome-font-viewer
-      gnome-maps
-      gnome-music
-      gnome-weather
-      pkgs.gnome-connections
-    ]);
+    gnome-connections
+  ];
 
   #############################################################################
   # Additional Gnome-Specific Apps

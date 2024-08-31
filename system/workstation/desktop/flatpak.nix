@@ -11,7 +11,7 @@
   xdg.portal.enable = true;
 
   # Nice Software browser for flatpak
-  environment.systemPackages = with pkgs; [ gnome.gnome-software ];
+  environment.systemPackages = with pkgs; [ gnome-software ];
 
   # Do not forget: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 }
