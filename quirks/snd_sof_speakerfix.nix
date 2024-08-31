@@ -2016,4 +2016,15 @@
     # This fix requires alsa-tools
     pkgs.alsa-tools
   ];
+
+  # Run as systemd service
+  # systemd.services.quirk_snd_sof_speakerfix = {
+  #   wantedBy = [ "sound.target" ];
+  #   #after = [ "sound.target" ];
+  #   description = "Apply snd-sof speaker fix.";
+  #   # This script takes some time to run. Trigger it and run in background to avoid blocking the graphical target.
+  #   script = ''
+  #     quirk_snd-sof-speakerfix.sh &
+  #   '';
+  # };
 }

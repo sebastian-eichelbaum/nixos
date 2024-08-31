@@ -14,7 +14,6 @@
   environment.systemPackages = with pkgs;
     [
       # Utils, monitoring and hardware tools
-      # NOTE: Tools like gzip, tar, ... are available by default
 
       psmisc # fuser, killall, pstree, ...
       htop # better monitoring of cpu/mem and IO
@@ -27,7 +26,15 @@
 
       # Get stuff onto and from the machine
       wget
+      curl
       rsync
+
+      # Some archivers. Although installed by default, make sure they are in our system path.
+      gnutar
+      gzip
+      bzip2
+      unzip
+      zip
 
       # Baseline for most scripts. Do not remove or change!
       bash
