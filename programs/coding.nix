@@ -45,14 +45,24 @@
     gdb
 
     # Formatters, linters and LSP
+
+    ## > C++
     clang-tools
     cmake-format
     cmake-language-server
+
+    ## > Web stuff
     typescript-language-server
     nodePackages.prettier
+
+    ## > Scripting and system stuff
     stylua
     nixfmt-classic
-    beautysh
+    shfmt
+
+    ## > Python
+    isort
+    black
 
     # Very nice for big directory comparisons
     meld
