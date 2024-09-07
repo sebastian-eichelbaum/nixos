@@ -17,7 +17,8 @@
     device = "/dev/disk/by-label/root";
     fsType = "ext4";
 
-    # No fsck
+    # No fsck - setting this to true would disable all fsck functionality.
+    # DO NOT DO that. Use tune2fs -c -1 and tune2fs -i 0 to disable regular checks instead
     noCheck = false;
 
     # Mount options
@@ -32,6 +33,23 @@
   fileSystems."/home" = {
     #device = "/dev/disk/by-label/home";
     device = "/dev/mapper/crypthome";
+    fsType = "ext4";
+
+    # No fsck
+    noCheck = false;
+
+    # Mount options
+    options = [
+      # Avoid a lot of meta data IO
+      "noatime"
+      # enable TRIM
+      "discard"
+    ];
+  };
+
+  fileSystems."/datengrab" = {
+    #device = "/dev/disk/by-label/home";
+    device = "/dev/mapper/cryptdatengrab";
     fsType = "ext4";
 
     # No fsck
@@ -87,6 +105,7 @@
   environment.etc."crypttab".text = ''
     # <target name>	<source device>		<key file>	<options>
     crypthome /dev/disk/by-uuid/1adf805f-b691-41af-ad68-e12c5d98ebe5 /root/crypthome.disk.key discard,no-read-workqueue,no-write-workqueue
+    cryptdatengrab /dev/disk/by-uuid/50ac26c5-e4c5-4197-a7e5-27c4428a166b /root/crypthome.disk.key discard,no-read-workqueue,no-write-workqueue
   '';
 
   #############################################################################
