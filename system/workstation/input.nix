@@ -28,7 +28,7 @@
 
         // Modify the EurKey Layout to map AltGR-Left/Right/Up/Down to Home/End/PgUp/PgDown
         // Hint: specify "lv3:caps_switch" in your kbb options to use caps as alt-gr.
-        // or: 
+        // or:
         include "level3(caps_switch)"
 
         key <LEFT> {
@@ -44,12 +44,12 @@
         };
         key <UP> {
                  type= "THREE_LEVEL",
-                 symbols[Group1] = [ Up, Up, Next ]
+                 symbols[Group1] = [ Up, Up, Prior ]
                  // actions[Group1] = [ NoAction(), NoAction(), RedirectKey(keycode=<PGUP>, clearmods=levelThree) ]
         };
         key <DOWN> {
                  type= "THREE_LEVEL",
-                 symbols[Group1] = [ Down, Down, Prior ]
+                 symbols[Group1] = [ Down, Down, Next ]
                  // actions[Group1] = [ NoAction(), NoAction(), RedirectKey(keycode=<PGDN>, clearmods=levelThree) ]
         };
       };
