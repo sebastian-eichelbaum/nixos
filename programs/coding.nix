@@ -47,7 +47,7 @@
     # Formatters, linters and LSP
 
     ## > C++
-    clang-tools
+    clang-tools # includes linter, language server
     cmake-format
     cmake-language-server
 
@@ -57,8 +57,10 @@
 
     ## > Scripting and system stuff
     stylua
+    lua-language-server
     nixfmt-classic
     shfmt
+    bash-language-server
 
     ## > Python
     isort

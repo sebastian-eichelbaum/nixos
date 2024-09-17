@@ -26,8 +26,11 @@
         # Default font used in my kitty terminal
         "Hack"
 
-        # Others... 
+        # Others...
         # "JetBrainsMono" "Inconsolata" "SourceCodePro"
+        "JetBrainsMono"
+        "FiraCode"
+        "Monaspace"
       ];
     })
   ];
