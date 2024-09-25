@@ -38,6 +38,9 @@
     ocrmypdf
     pandoc
 
+    ffmpeg-full
+    yt-dlp
+
     # Partitioning and file system stuff
     gparted
     exfatprogs
