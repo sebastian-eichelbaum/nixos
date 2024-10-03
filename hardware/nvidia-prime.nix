@@ -23,11 +23,10 @@
     #
     # The 550 series of drivers causes issues (crashes, freezes, ...) - see
     # https://forums.developer.nvidia.com/t/series-550-freezes-laptop/284772/192
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
+    # package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
 
-    # Do not use the open source kernel module. It does not yet support
-    # some features like reverse sync
-    # open = false;
+    # Enable on version >= 560!
+    open = true;
 
     # Required by wayland and to make reverse prime work properly
     modesetting.enable = true;

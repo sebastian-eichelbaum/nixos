@@ -32,9 +32,10 @@
   ];
 
   # Ensure all terminfo are installed to avoid ssh-ing into a machine that
-  # does not undersatdn your terminal. I.e. kitty uses zterm-kitty that would
+  # does not understand your terminal. I.e. kitty uses zterm-kitty that would
   # trigger an invalid term definition alert.
-  environment.enableAllTerminfo = true;
+  # TODO: contour is broke and causes this to fail. Check https://github.com/NixOS/nixpkgs/pull/345827
+  environment.enableAllTerminfo = false;
 
   #############################################################################
   # Nix Base Setup
@@ -52,7 +53,7 @@
   # Nix Package Manager optimization and garbage colection
   nix = {
     settings = {
-      # Optimise syslinks
+      # Optimise store at every build
       auto-optimise-store = true;
     };
 

@@ -36,11 +36,9 @@
         enable = true;
 
         # Use the background of the user
-        background = "/home/${config.SysConfig.user.name}/.background-image";
+        # background = "/home/${config.SysConfig.user.name}/.background-image";
 
         # Theme
-        #greeters.slick.enable = true;
-        #greeters.slick.draw-user-backgrounds = true;
         greeters.enso.enable = true;
         greeters.enso.blur = true;
       };

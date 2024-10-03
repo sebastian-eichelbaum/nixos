@@ -84,6 +84,7 @@
 
       # NOTE: most of this is handled by GTK, Qt and the Windowmanager anyways.
       # inactive-opacity = 0.90;
+      # active-opacity = 1.0;
       # frame-opacity = 0.7;
       # menu-opacity = 1.0;
 
