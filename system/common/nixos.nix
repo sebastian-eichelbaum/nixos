@@ -24,18 +24,31 @@
   # ... Except man pages
   documentation.man.enable = true;
 
+  #############################################################################
+  # Nix Tools
+  #
+
   # Install some nix tools.
   environment.systemPackages = with pkgs; [
+    # Handy tool to print nixos options.
+    # Examples:
+    #    * print the nested options of 'documentation.man': nixos-option documentation.man
+    #    * print the value of an option in the config and where it was set: nixos-option documentation.man.enable
     nixos-option
-    nix-index
+
+    # TUI to browse through the store and search for packages.
+    nix-tree
+
+    # Provide an nix package file index. If you need to know which package contains a file, use this.
+    # Example:
+    #   * nix-locate 'bin/hello' - list packages that contain a bin/hello file
+    #
+    # Requires a regular run of nix-index
+    # nix-index
+
+    # Code formatter for nix.
     nixfmt-classic
   ];
-
-  # Ensure all terminfo are installed to avoid ssh-ing into a machine that
-  # does not understand your terminal. I.e. kitty uses zterm-kitty that would
-  # trigger an invalid term definition alert.
-  # TODO: contour is broke and causes this to fail. Check https://github.com/NixOS/nixpkgs/pull/345827
-  environment.enableAllTerminfo = false;
 
   #############################################################################
   # Nix Base Setup
@@ -46,8 +59,14 @@
   # Hardware Platform
   nixpkgs.hostPlatform = config.SysConfig.hostPlatform;
 
+  # Ensure all terminfo are installed to avoid ssh-ing into a machine that
+  # does not understand your terminal. I.e. kitty uses zterm-kitty that would
+  # trigger an invalid term definition alert.
+  # TODO: contour is broken and causes this to fail. Check https://github.com/NixOS/nixpkgs/pull/345827
+  environment.enableAllTerminfo = false;
+
   #############################################################################
-  # Nix Householding Setup
+  # Nix house-holding Setup
   #
 
   # Nix Package Manager optimization and garbage colection

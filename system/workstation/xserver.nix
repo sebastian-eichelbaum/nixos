@@ -129,4 +129,38 @@
       xrdb -merge $HOME/.Xresources
     fi
   '';
+
+  #############################################################################
+  # Automatic screen management: autorandr
+  #
+
+  services.autorandr = {
+    enable = true;
+
+    # Define some default hooks that inform the user about what is going on.
+    hooks = {
+      predetect = {
+        "notify" = ''
+          ${pkgs.dunst}/bin/dunstify -a "autorandr-predetect" -i display -r "154334" "Display Profile" "Detecting ..."
+        '';
+      };
+
+      preswitch = {
+        "notify" = ''
+          ${pkgs.dunst}/bin/dunstify -a "autorandr-predetect" -t 5000 -i display -r "154334" "Display Profile" "Switching to $AUTORANDR_MONITORS ($AUTORANDR_CURRENT_PROFILE)"
+        '';
+      };
+
+      postswitch = {
+        "notify" = ''
+          ${pkgs.dunst}/bin/dunstify -a "autorandr-predetect" -t 5000 -i display -r "154334" "Display Profile" "$AUTORANDR_MONITORS ($AUTORANDR_CURRENT_PROFILE)"
+        '';
+
+        # Awesome needs to be restarted to pick up changes like active monitor or DPI changes.
+        "restartAwesome" =
+          "echo 'awesome.restart()' | ${pkgs.awesome}/bin/awesome-client";
+      };
+    };
+  };
 }
+

@@ -94,6 +94,26 @@
     };
 
     ###########################################################################
+    # Hardware:
+    #
+
+    SysConfig.hardware.nvidia.prime = {
+      intelBusId = lib.mkOption {
+        type = lib.types.str;
+        description = ''
+          When using NVidia prime, specify the bus ID of the Intel GPU. Use 'nix-shell -p lshw --run "lshw -c display"' to find it.'';
+        default = "PCI:0:2:0";
+      };
+
+      nvidiaBusId = lib.mkOption {
+        type = lib.types.str;
+        description = ''
+          When using NVidia prime, specify the bus ID of the Nvidia GPU. Use 'nix-shell -p lshw --run "lshw -c display"' to find it.'';
+        default = "PCI:1:0:0";
+      };
+    };
+
+    ###########################################################################
     # Features:
     #
 

@@ -46,17 +46,11 @@
   # The GPG agent to store unlocked keys per session
   programs.gnupg.agent.enable = true;
 
-  # Compositing. NOTE: this has some drawbacks:
-  #  * does not load a config file in $HOME
-  #  * BUG: systemd service gone missing?!
-  #services.picom = {
-  #  # Disabled. Too many issues. Installed as a package instead
-  #  enable = false;
-  #  settings = {
-  #    # vsync = false;
-  #    # ...
-  #  };
-  #};
+  # Ensure autorandr restarts awesome to pick up changes like active screen and DPI changes.
+  services.autorandr.hooks.postswitch = {
+    "restartAwesome" =
+      "echo 'awesome.restart()' | ${pkgs.awesome}/bin/awesome-client";
+  };
 
   # }}}
 

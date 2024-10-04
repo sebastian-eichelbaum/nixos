@@ -17,6 +17,7 @@
     fd # nice find replacement
     fzf # fuzzy finder
     bat # Cat replacement with colors
+    bat-extras.batgrep
     tree # Dir tree previews in fzf
     delta # Pager and Diff highlighter. Used with git.
 

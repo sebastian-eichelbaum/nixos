@@ -129,7 +129,13 @@
     # Initial ramdisk setup
     initrd = {
       # Always loaded from initrd
-      kernelModules = [ "i915" ];
+      kernelModules = lib.mkAfter [
+        "i915"
+        # Load NVidia on boot. If not, the screen stays black until the nvidia module loads later.
+        # TODO: this causes systemd-modules-load.service to fail early during boot. Check with
+        #       journalctl -u systemd-modules-load.service -b
+        # "nvidia"
+      ];
 
       # Modules that should be available in the initial ramdisk
       availableKernelModules = [
@@ -153,6 +159,13 @@
         "aesni_intel"
         "crypto_simd"
         "cryptd"
+
+        # NVidia
+        #"nvidia"
+        #"nvidia_drm"
+        #"nvidia_modeset"
+        #"nvidia_wmi_ec_backlight"
+        #"nvidia_uvm"
       ];
 
       luks.devices = {
@@ -183,7 +196,9 @@
     kernelModules = [ ];
 
     # A list of packages containing additional, required kernel modules
-    extraModulePackages = [ ];
+    extraModulePackages = [
+      #config.boot.kernelPackages.nvidia_x11
+    ];
 
     # Blacklist some modules.
     # WARNING: unlike many recommendations online, it is not recommended to
@@ -200,11 +215,8 @@
   hardware.cpu.intel.updateMicrocode = true;
   hardware.cpu.amd.updateMicrocode = false;
 
-  # use intel+nvidia vaapi. NOTE:
-  hardware.graphics.extraPackages = with pkgs; [
-    intel-media-driver
-    nvidia-vaapi-driver
-  ];
+  # use intel vaapi.
+  hardware.graphics.extraPackages = with pkgs; [ intel-media-driver ];
 
   # Use intel va driver by default.
   environment.variables = { LIBVA_DRIVER_NAME = lib.mkDefault "iHD"; };
@@ -362,11 +374,11 @@
   ];
 
   # Apply the correct color profile (icm,icc) for this device
-  services.xserver.displayManager.sessionCommands = ''
-    # load if present
-    profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16.icm
-    if [ -f $profile ]; then
-      xcalib -output eDP-0 $profile
-    fi
-  '';
+  # services.xserver.displayManager.sessionCommands = ''
+  #   # load if present
+  #   profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16.icm
+  #   if [ -f $profile ]; then
+  #     xcalib -output eDP-0 $profile
+  #   fi
+  # '';
 }
