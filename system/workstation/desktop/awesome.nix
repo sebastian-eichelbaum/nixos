@@ -48,8 +48,10 @@
 
   # Ensure autorandr restarts awesome to pick up changes like active screen and DPI changes.
   services.autorandr.hooks.postswitch = {
-    "restartAwesome" =
-      "echo 'awesome.restart()' | ${pkgs.awesome}/bin/awesome-client";
+    "50_awesomeRestart" = ''
+      awesome-client "awesome.restart()" > /dev/null 2>&1
+      sleep 1
+    '';
   };
 
   # }}}

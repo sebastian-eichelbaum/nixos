@@ -9,6 +9,9 @@
     # Use awesome as window manager
     ./awesome.nix
 
+    # Manage screens with autorandr
+    ./autorandr.nix
+
     # Use a stripped down gnome as base
     ./gnome-core.nix
 
@@ -30,5 +33,5 @@
 
     # Nix-LD to handle all the lib lookup for binaries
     ./nix-ld.nix
- ];
+  ];
 }

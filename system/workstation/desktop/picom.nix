@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-
   # Compositing.
   #
   # NOTE: this provides picom as sustemd service but does not allow
@@ -20,6 +19,7 @@
       log-level = "warn";
 
       # The backend to use. This influences vsync functionality and blur
+      #backend = "xrender";
       backend = "glx";
 
       # Makes workspace flips and fast moving stuff look good but increases latency
@@ -48,8 +48,8 @@
       #
 
       fading = true;
-      fade-in-step = 0.2;
-      fade-out-step = 0.2;
+      fade-in-step = 0.133;
+      fade-out-step = 0.133;
       fade-delta = 10;
 
       # Specify a list of conditions of windows that should not be faded.
@@ -62,14 +62,15 @@
       # Shadows
       #
 
-      shadow = false;
-      shadow-offset-x = -20;
-      shadow-offset-y = -20;
-      shadow-opacity = 0.5;
-      shadow-radius = 20;
+      shadow = true;
+      shadow-offset-x = -50;
+      shadow-offset-y = -50;
+      shadow-opacity = 0.66;
+      shadow-radius = 50;
 
       # Exclude some types of windows as they create strange artefacts
       shadow-exclude = [
+        "!focused"
         "_GTK_FRAME_EXTENTS@:c"
         # Firefox creates strange borders around menus. Disable shadows for FF
         "class_g = 'Firefox' && argb"
@@ -123,33 +124,89 @@
         "window_type *= 'menu'"
       ];
 
-      wintypes=
-      {
-          # GTK4 fucks up with those shaodws
-          menu = { fade = true; shadow = false; full-shadow = true; opacity = 1.0; focus = true; };
-          dropdown_menu = { fade = true; shadow = true; opacity = 0.95; focus = true; };
-          popup_menu = { fade = true; shadow = true; opacity = 0.95; focus = true; };
-          combo = { fade = true; shadow = true; opacity = 1.0; focus = true; };
+      wintypes = {
+        # GTK4 messes with those shadows
+        menu = {
+          fade = true;
+          shadow = false;
+          full-shadow = true;
+          opacity = 1.0;
+          focus = true;
+        };
+        dropdown_menu = {
+          fade = true;
+          shadow = true;
+          opacity = 0.95;
+          focus = true;
+        };
+        popup_menu = {
+          fade = true;
+          shadow = true;
+          opacity = 0.95;
+          focus = true;
+        };
+        combo = {
+          fade = true;
+          shadow = true;
+          opacity = 1.0;
+          focus = true;
+        };
 
-          dialog  = { fade = true; shadow = true; opacity = 1.0; focus = true; };
-          utility = { fade = true; shadow = true; opacity = 1.0; focus = true; };
-          toolbar = { fade = true; shadow = true; opacity = 1.0; focus = true; };
-          splash  = { fade = true; shadow = true; opacity = 1.0; focus = true; };
+        dialog = {
+          fade = true;
+          shadow = true;
+          opacity = 1.0;
+          focus = true;
+        };
+        utility = {
+          fade = true;
+          shadow = true;
+          opacity = 1.0;
+          focus = true;
+        };
+        toolbar = {
+          fade = true;
+          shadow = true;
+          opacity = 1.0;
+          focus = true;
+        };
+        splash = {
+          fade = true;
+          shadow = true;
+          opacity = 1.0;
+          focus = true;
+        };
 
-          tooltip = { fade = true; shadow = true; opacity = 0.9; focus = true; };
+        tooltip = {
+          fade = true;
+          shadow = true;
+          opacity = 0.9;
+          focus = true;
+        };
 
-          notification = { fade = true; shadow = true; opacity = 0.9; focus = true; };
+        notification = {
+          fade = true;
+          shadow = true;
+          opacity = 0.9;
+          focus = true;
+        };
 
-          # AwesomeWM Wibox
-          dock = { clip-shadow-above = true; shadow = true; };
+        # AwesomeWM Wibox
+        dock = {
+          clip-shadow-above = true;
+          shadow = true;
+        };
 
-          dnd = { fade = true; shadow = false; opacity = 0.8; };
+        dnd = {
+          fade = true;
+          shadow = false;
+          opacity = 0.8;
+        };
 
-          # unknown = {};
-          # desktop = {};
-          # normal = { fade = true; };
+        # unknown = {};
+        # desktop = {};
+        # normal = { fade = true; };
       };
-
     };
   };
 }

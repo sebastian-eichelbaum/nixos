@@ -6,6 +6,11 @@
   # * Use X instead of wayland
   # * Ensure OpenGL is enabled for the X server
 
+  imports = [
+    # Fix some of the driver quirks
+    ../quirks/nvidia_fixes.nix
+  ];
+
   #############################################################################
   # Hardware Setup
   #
@@ -19,20 +24,22 @@
 
   # NVIDIA specific setup. Ensure unfree packages
   hardware.nvidia = {
-    # Force the use of an older NVIDIA driver?
+    # A driver version:
     #
-    # The 550 series of drivers causes issues (crashes, freezes, ...) - see
-    # https://forums.developer.nvidia.com/t/series-550-freezes-laptop/284772/192
     # package = config.boot.kernelPackages.nvidiaPackages.legacy_535;
     # package = config.boot.kernelPackages.nvidiaPackages.beta;
-    # package = config.boot.kernelPackages.nvidiaPackages.stable;
     # package = config.boot.kernelPackages.nvidiaPackages.production;
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
 
     # Use the open driver?
-    open = false;
+    open = true;
 
-    # Required by Wayland and to make reverse prime work properly
-    modesetting.enable = true;
+    # Enable modeset and fbdev for the nvidia-drm driver. This sets the kernel params nvidia-drm.modeset and
+    # nvidia_drm.fbdev to be 1.
+    #
+    # Is required for autorandr to work. Without this, udev is not able to detect changes in connected displays.
+    modesetting.enable = lib.mkOverride 999 true;
 
     # Adds nvidia-settings to the package list
     nvidiaSettings = true;
@@ -41,6 +48,8 @@
     powerManagement.enable = lib.mkOverride 999 true;
     # Fine-grained control is only allowed in prime offload configurations
     powerManagement.finegrained = lib.mkOverride 999 false;
+    # Shifts power between CPU and GPU. Disabled by default (for a reason?)
+    dynamicBoost.enable = lib.mkOverride 999 true;
 
     prime = {
       # Disable offloading

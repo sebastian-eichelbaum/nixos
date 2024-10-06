@@ -197,7 +197,9 @@
 
     # A list of packages containing additional, required kernel modules
     extraModulePackages = [
-      #config.boot.kernelPackages.nvidia_x11
+      # config.hardware.nvidia.package
+      # Although this is shown in the docs, it causes errors when building some driver versions
+      # config.boot.kernelPackages.nvidia_x11
     ];
 
     # Blacklist some modules.

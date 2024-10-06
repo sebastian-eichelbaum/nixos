@@ -62,8 +62,7 @@
   # Ensure all terminfo are installed to avoid ssh-ing into a machine that
   # does not understand your terminal. I.e. kitty uses zterm-kitty that would
   # trigger an invalid term definition alert.
-  # TODO: contour is broken and causes this to fail. Check https://github.com/NixOS/nixpkgs/pull/345827
-  environment.enableAllTerminfo = false;
+  environment.enableAllTerminfo = true;
 
   #############################################################################
   # Nix house-holding Setup

@@ -114,12 +114,17 @@
     xdotool # Programmatically perform X ops. Needed for rofi-pass/...
 
     xcalib # handy tool to set display color calibration files.
+
+    # Implement the XSETTINGS protocol. Apps that use Gtk listen to this. It is used to inform about DPI changes and
+    # other settings. See https://codeberg.org/derat/xsettingsd
+    xsettingsd
   ];
 
   # Disable the annoying bell.
-  # NOTE: most terminals still ring the bell. They have specific settings to
-  # turn this off.
+  # NOTE: most terminals still ring the bell. They have specific settings to turn this off.
   xdg.sounds.enable = false;
+
+  # Xresources
   services.xserver.displayManager.sessionCommands = ''
     # Disable bell
     xset b off
@@ -130,36 +135,15 @@
     fi
   '';
 
-  #############################################################################
-  # Automatic screen management: autorandr
-  #
+  # Provide XSettings as systemd service
+  systemd.user.services.xsettingsd = {
+    description = "XSETTINGS-protocol daemon";
+    partOf = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
 
-  services.autorandr = {
-    enable = true;
-
-    # Define some default hooks that inform the user about what is going on.
-    hooks = {
-      predetect = {
-        "notify" = ''
-          ${pkgs.dunst}/bin/dunstify -a "autorandr-predetect" -i display -r "154334" "Display Profile" "Detecting ..."
-        '';
-      };
-
-      preswitch = {
-        "notify" = ''
-          ${pkgs.dunst}/bin/dunstify -a "autorandr-predetect" -t 5000 -i display -r "154334" "Display Profile" "Switching to $AUTORANDR_MONITORS ($AUTORANDR_CURRENT_PROFILE)"
-        '';
-      };
-
-      postswitch = {
-        "notify" = ''
-          ${pkgs.dunst}/bin/dunstify -a "autorandr-predetect" -t 5000 -i display -r "154334" "Display Profile" "$AUTORANDR_MONITORS ($AUTORANDR_CURRENT_PROFILE)"
-        '';
-
-        # Awesome needs to be restarted to pick up changes like active monitor or DPI changes.
-        "restartAwesome" =
-          "echo 'awesome.restart()' | ${pkgs.awesome}/bin/awesome-client";
-      };
+    serviceConfig = {
+      ExecStart = "${pkgs.xsettingsd}/bin/xsettingsd";
+      Slice = "session.slice";
     };
   };
 }

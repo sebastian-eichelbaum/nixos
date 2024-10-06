@@ -1,8 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Requires the base NVidia config. On Dual-GPU laptops, this causes the internal display to stay black.
-  imports = [ ./nvidia.nix ];
+  imports = [
+    # Requires the base NVidia config. On Dual-GPU laptops, this causes the internal display to stay black.
+    ./nvidia.nix
+  ];
 
   # Regarding the PRIME modes:
   #
@@ -33,16 +35,22 @@
     prime = {
       # Make the internal display available:
       reverseSync.enable = true;
+
+      # The default script triggers 'xrandr --auto' after setting up reverse sync. This makes sense as it provides an
+      # image on previously disabled screens. A common scenario: booting the laptop in NVidia-only mode. The internal
+      # screen stays black. That's bad. xrandr --auto prevents this from happening.
+      #
+      # When using autorandr though, this causes a LOT of screen on/off flicker when booting.
+      reverseSync.setupCommands.enable = !config.services.autorandr.enable;
     };
   };
 
-  # This is triggered before showing the login (or skipping it due to auto login)
-  services.xserver.displayManager.setupCommands = lib.mkAfter ''
-    ${pkgs.xorg.xrandr}/bin/xrandr \
-        --output DP-5 --mode 2560x1440 --rate 120 --primary \
-        --output eDP-1-1 --off \
-        --dpi 96
-  '';
+  # See: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/hardware/video/nvidia.nix
+  #
+  # WARNING: not working with AMD GPUs
+  # services.xserver.displayManager.setupCommands = lib.mkBefore ''
+  #   ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
+  # '';
 
   #############################################################################
   # Prime Offload Setup
