@@ -54,6 +54,9 @@
 
       # Specify a list of conditions of windows that should not be faded.
       fade-exclude = [
+        # Prevents fullscreen active windows to flicker
+        # "focused"
+
         # Exclude all but ROFI. It looks nice :-)
         "window_type = 'normal' && class_g != 'Rofi'"
       ];
@@ -70,7 +73,8 @@
 
       # Exclude some types of windows as they create strange artefacts
       shadow-exclude = [
-        "!focused"
+        "window_type != 'dock' && !focused"
+
         "_GTK_FRAME_EXTENTS@:c"
         # Firefox creates strange borders around menus. Disable shadows for FF
         "class_g = 'Firefox' && argb"
@@ -84,10 +88,10 @@
       #
 
       # NOTE: most of this is handled by GTK, Qt and the Windowmanager anyways.
-      # inactive-opacity = 0.90;
-      # active-opacity = 1.0;
-      # frame-opacity = 0.7;
-      # menu-opacity = 1.0;
+      # inactive-opacity = 0.9;
+      # active-opacity = 0.9;
+      # frame-opacity = 0.9;
+      # menu-opacity = 0.9;
 
       # Can look nice but causes a flicker for grouped windows sometimes if the child window closes.
       # NOTE: when using a color picker, the color picker picks up the dimmed color for inactive windows.
@@ -119,7 +123,7 @@
 
         # Disable for some window types and GTK Frames.
         "_GTK_FRAME_EXTENTS@:c"
-        "window_type = 'dock'"
+        #"window_type = 'dock'"
         "window_type = 'desktop'"
         "window_type *= 'menu'"
       ];
@@ -195,6 +199,7 @@
         dock = {
           clip-shadow-above = true;
           shadow = true;
+          opacity = 0.9;
         };
 
         dnd = {
