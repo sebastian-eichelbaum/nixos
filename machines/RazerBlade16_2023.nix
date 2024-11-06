@@ -231,20 +231,22 @@
 
   # The kernel sets this to max_performance by default. This machine has two SSD,
   # so setting a more power saving setting can save a few watts!
-  powerManagement.scsiLinkPolicy = "med_power_with_dipm";
-
-  # Makes better use of eficiency cores on newer intel machines
-  services.thermald.enable = true;
+  # powerManagement.scsiLinkPolicy = "med_power_with_dipm";
 
   # P-States magic makes this superfluous.
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
+  # Makes better use of efficiency cores on newer intel machines
+  services.thermald.enable = true;
+
   # Nix enables the power profiles tool by default. Unfortunately, it does not
   # switch automatically on bat/ac.
   # See: powerprofilesctl
-  # services.power-profiles-daemon.enable = false;
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = true;
+  services.tlp.settings = { SATA_LINKPWR_ON_BAT = "med_power_with_dipm"; };
 
-  services.cpupower-gui.enable = true;
+  services.cpupower-gui.enable = false;
   #services.auto-cpufreq = {
   #    enable = true;
   #    settings = {
@@ -260,7 +262,7 @@
   #  };
 
   # Enable Wifi PowerSave mode. Good idea? Any real use?
-  # networking.networkmanager.wifi.powersave = true;
+  networking.networkmanager.wifi.powersave = true;
 
   # Be warned. Enabling this activates a lot of power saving features but can
   # also mess up laptop keybords and mouse. This config uses udev rules to be

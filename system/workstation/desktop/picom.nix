@@ -9,6 +9,8 @@
   # NOTE: picom service is not starting? systemctl --user status picom
   # complains the service file not being found? Delete the link
   # ~.config/systemd/user/picom.service
+  #
+  # See https://github.com/yshui/picom/blob/next/picom.sample.conf
   services.picom = {
 
     enable = true;
@@ -48,9 +50,12 @@
       #
 
       fading = true;
-      fade-in-step = 0.133;
-      fade-out-step = 0.133;
+      fade-in-step = 0.1;
+      fade-out-step = 0.1;
       fade-delta = 10;
+
+      # Do not fade on window open/close.
+      no-fading-openclose = false;
 
       # Specify a list of conditions of windows that should not be faded.
       fade-exclude = [
@@ -60,6 +65,12 @@
         # Exclude all but ROFI. It looks nice :-)
         "window_type = 'normal' && class_g != 'Rofi'"
       ];
+
+      #########################################################################
+      # Corners
+      #
+
+      # corner-radius = 10;
 
       #########################################################################
       # Shadows
@@ -75,12 +86,12 @@
       shadow-exclude = [
         "window_type != 'dock' && !focused"
 
-        "_GTK_FRAME_EXTENTS@:c"
+        "_GTK_FRAME_EXTENTS@"
         # Firefox creates strange borders around menus. Disable shadows for FF
         "class_g = 'Firefox' && argb"
         "class_g = 'firefox' && argb"
         # Qt Apps nutzen manchmal eigene styles und runde menus usw.
-        "_NET_WM_WINDOW_TYPE:a *= '_KDE_NET_WM_WINDOW_TYPE_OVERRIDE'"
+        "_NET_WM_WINDOW_TYPE *= '_KDE_NET_WM_WINDOW_TYPE_OVERRIDE'"
       ];
 
       #########################################################################
@@ -113,8 +124,8 @@
 
       # Transparent window blur. Attention: might have some performance impact.
       blur-background = true;
-      # Blur frames?
-      blur-background-frame = true;
+      # Blur frames? Should be false. Tooltips in firefox have a frame that looks strange when blurring.
+      blur-background-frame = false;
 
       # Exclude some types of windows as they create strange artefacts
       blur-background-exclude = [
@@ -122,11 +133,32 @@
         #"window_type = 'normal' && class_g != 'Rofi'"
 
         # Disable for some window types and GTK Frames.
-        "_GTK_FRAME_EXTENTS@:c"
+        "_GTK_FRAME_EXTENTS@"
         #"window_type = 'dock'"
         "window_type = 'desktop'"
         "window_type *= 'menu'"
       ];
+
+      #########################################################################
+      # Window type specific overrides
+      #
+
+      # Not yet supported by nix. Produces a badly formatted rules definition
+      # rules = [
+      #   {
+      #     match = "window_type = 'tooltip'";
+      #     blur = false;
+      #   },
+      #   {
+      #     match =
+      #       "window_type = 'dock' ||  window_type = 'desktop' || _GTK_FRAME_EXTENTS@";
+      #     blur-background = false;
+      #   },
+      #   {
+      #     match = "window_type = 'dock' || window_type = 'desktop'";
+      #     corner-radius = 0;
+      #   }
+      # ];
 
       wintypes = {
         # GTK4 messes with those shadows

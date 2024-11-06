@@ -16,7 +16,7 @@
 
   # Git, git lfs
   programs.git.lfs.enable = true;
-  # programs.git.enable = true; # Enabled in the common system config
+  programs.git.enable = true; # Enabled in the common system config
 
   # Nore
   environment.systemPackages = with pkgs; [
