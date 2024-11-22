@@ -33,7 +33,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
 
     # Use the open driver?
-    open = true;
+    open = false;
 
     # Enable modeset and fbdev for the nvidia-drm driver. This sets the kernel params nvidia-drm.modeset and
     # nvidia_drm.fbdev to be 1.

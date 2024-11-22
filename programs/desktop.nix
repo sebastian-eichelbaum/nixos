@@ -45,6 +45,7 @@
     gparted
     exfatprogs
     ntfs3g
+    cifs-utils
 
     ###########################################################################
     # Communication tools

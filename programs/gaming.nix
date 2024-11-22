@@ -6,19 +6,18 @@
   #
 
   # Games and emulators
-  environment.systemPackages = with pkgs;
-    [
-      # Game launchers and stores
-      steam
-      # lutris
-      # heroic
+  environment.systemPackages = with pkgs; [
+    # Game launchers and stores
+    steam
+    # lutris
+    heroic
 
-      # Emulation
-      # yuzu-mainline
+    # Emulation
+    # yuzu-mainline
 
-      # VR
-      # sidequest
-    ];
+    # VR
+    # sidequest
+  ];
 
   #############################################################################
   # Gamemode support

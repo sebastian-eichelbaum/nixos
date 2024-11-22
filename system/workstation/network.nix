@@ -15,6 +15,11 @@
       allowedTCPPorts = [
         # Used by Gradio based AI web frontends. Open to allow access in the local network.
         7860
+
+        # Used by vite
+        5173
+        5174
+        5175
       ];
     };
   };
