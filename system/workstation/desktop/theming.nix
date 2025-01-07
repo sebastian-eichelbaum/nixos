@@ -17,22 +17,14 @@
     font-awesome
     font-awesome_5
 
-    # Coding/Shell Fonts
-    # The font names do not match the fontnames in the nix package repos. Check
-    # the shas.nix file to find the right name:
-    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/data/fonts/nerdfonts/shas.nixTo
-    (nerdfonts.override {
-      fonts = [
-        # Default font used in my kitty terminal
-        "Hack"
-
-        # Others...
-        # "JetBrainsMono" "Inconsolata" "SourceCodePro"
-        "JetBrainsMono"
-        "FiraCode"
-        "Monaspace"
-      ];
-    })
+    # Default font used in my kitty terminal
+    pkgs.nerd-fonts.hack
+    # Others ...
+    # Check https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/data/fonts/nerd-fonts/manifests/fonts.json for
+    # more
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.monaspace
   ];
 
   #############################################################################

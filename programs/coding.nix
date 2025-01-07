@@ -68,7 +68,7 @@
 
     # Very nice for big directory comparisons
     meld
-    gittyup
+    # gittyup
 
     ###########################################################################
     # Development: Unity
@@ -91,7 +91,7 @@
     })
 
     # Dotnet SDK is required if VS Code C# extensions should be used
-    dotnet-sdk_7
+    dotnet-sdk_8
 
     ###########################################################################
     # Development: Cuda

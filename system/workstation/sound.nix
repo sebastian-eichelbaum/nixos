@@ -10,7 +10,8 @@
   # hardware.pulseaudio.enable = true;
 
   # Disable Pulse as it is now superceeded by PipeWire
-  hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # Optional but recommended for PipeWire
   security.rtkit.enable = true;
