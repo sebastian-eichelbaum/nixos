@@ -102,9 +102,21 @@
     # Random number generation
     cudaPackages.libcurand
 
+    ###########################################################################
+    # Development: Android
+    #
+
+    # ADB and fastboot. Not only used for Android development.
+    android-tools
+
+    #android-studio
+    #android-studio-tools
+
   ];
 
   # Needed for Unity Editor pre 2022.3.1f1 - REMOVE as soon as possible.
-  #nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1v" ];
+  # nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1v" ];
 
+  # Enable ADB. Ensure the user is in the group adbusers. (Set SysConfig.user.extraGroups)
+  programs.adb.enable = true;
 }

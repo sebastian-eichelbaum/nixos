@@ -5,12 +5,6 @@
   # Allow users to access some USB devices
   #
 
-  # Android fastboot/adb
-  # SUBSYSTEM=="usb", ATTR{idVendor}=="04e8", MODE="0666", GROUP="plugdev"
-
-  # Nintendo Switch
-  # SUBSYSTEM=="usb", ATTR{idVendor}=="057e", ATTR{idProduct}=="3000", MODE="0660", GROUP="users"
-
   # Adafruit Feather 32u4 Basic Proto
   #SUBSYSTEM=="usb", ATTRS{idVendor}=="239a", ATTRS{idProduct}=="800c", MODE="0660", GROUP="users"
   # Adafruit Trinket Pro
