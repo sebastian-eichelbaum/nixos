@@ -50,6 +50,7 @@
     };
 
     # NOTE: those scripts can also be set in ~/.config/gamemode.ini
+    # Attention: the indent on the second and following lines of the string is required!
     custom = {
       start = ''
         ${pkgs.libnotify}/bin/notify-send -i applications-games "GameMode" "Started"

@@ -3,7 +3,6 @@
 { config, ... }:
 
 {
-
   # The list of other modules to import. This is the spot where you can be
   # more or less specific on which modules get loaded.
   imports = [

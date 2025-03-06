@@ -47,6 +47,8 @@
     ntfs3g
     cifs-utils
 
+    proton-pass
+
     ###########################################################################
     # Communication tools
     #
@@ -54,6 +56,7 @@
     # Ferdium replaces rocketchat-desktop, slack, discord, ...
     ferdium
     thunderbird
+    protonmail-desktop
 
     anydesk
 
