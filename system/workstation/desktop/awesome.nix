@@ -83,7 +83,10 @@
 
     # Nice screen locker
     xss-lock
-    i3lock-fancy-rapid
+    # shows a blurred screen.
+    # i3lock-fancy-rapid
+    # Super secure
+    xsecurelock
 
     # Power monitor
     powertop
@@ -101,14 +104,16 @@
   # xss-lock as the locking service
   programs.xss-lock = {
     enable = true;
-    lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 5";
+    #lockerCommand = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 5";
+    lockerCommand = "${pkgs.xsecurelock}/bin/xsecurelock";
     extraOptions = [
-      # Use this custom dimmer script when notifying the
-      # user about inactivity.
-      #
-      # The good thing: if the script is not present, xss-lock does nothing.
+      # Dimmer scripts
       "-n"
-      "/home/${config.SysConfig.user.name}/.local/bin/mon-backlight-dimmer"
+      #"/home/${config.SysConfig.user.name}/.local/bin/mon-backlight-dimmer"
+      "${pkgs.xsecurelock}libexec/xsecurelock/dimmer"
+
+      # Ensures the machine goes to sleep after locking the screen. Important on laptops.
+      "-l"
     ];
   };
 

@@ -41,7 +41,7 @@
     # core-utilities.enable = false;
     # core-os-services.enable = false;
     # glib-networking.enable = false;
-    # gnome-keyring.enable = false;
+    gnome-keyring.enable = true;
     # gnome-settings-daemon.enable = false;
     # tracker.enable = false;
     # tracker-miners.enable = false;
@@ -83,6 +83,13 @@
 
     # Assistive tools
     at-spi2-core.enable = lib.mkForce false;
+  };
+
+  security.pam.services = {
+    "${config.SysConfig.user.name}" = {
+      # Unlock the user's keyring upon login
+      enableGnomeKeyring = true;
+    };
   };
 
   # Exclude all those nasty gnome apps:
