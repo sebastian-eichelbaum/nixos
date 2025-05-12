@@ -2017,7 +2017,7 @@
     pkgs.alsa-tools
   ];
 
-  # Run as systemd service
+  # Run as systemd service? - Not working. Run this during your session startup.
   # systemd.services.quirk_snd_sof_speakerfix = {
   #   wantedBy = [ "sound.target" ];
   #   #after = [ "sound.target" ];
