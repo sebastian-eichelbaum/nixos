@@ -237,7 +237,7 @@
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   # Makes better use of efficiency cores on newer intel machines
-  services.thermald.enable = true;
+  services.thermald.enable = false;
 
   # Nix enables the power profiles tool by default. Unfortunately, it does not
   # switch automatically on bat/ac.

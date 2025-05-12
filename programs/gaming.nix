@@ -49,6 +49,11 @@
       pin_cores = true;
     };
 
+    gpu = {
+      # "Adaptive"=0 "Prefer Maximum Performance"=1 and "Auto"=2
+      nv_powermizer_mode = 1;
+    };
+
     # NOTE: those scripts can also be set in ~/.config/gamemode.ini
     # Attention: the indent on the second and following lines of the string is required!
     custom = {
