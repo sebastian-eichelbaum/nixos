@@ -96,6 +96,10 @@
     "flakes"
   ];
 
+  # Disable the warning that shows when using a flake in a dirty git repo. As I use flakes mostly for dev-envs, they are
+  # nearly always dirty.
+  nix.settings.warn-dirty = false;
+
   #############################################################################
   # Quirks and hacks
   #

@@ -26,8 +26,8 @@
     #
 
     lazygit # Nice git history browser
-    mr    # repo management
-    mani  # repo management. Nice replacement for mr.
+    mr # repo management
+    mani # repo management. Nice replacement for mr.
 
     ncdu # disk usage utility
 
@@ -57,10 +57,10 @@
     "direnv/direnv.toml" = {
       text = ''
         [global]
-        warn_timeout = "3m"
+        warn_timeout = "5m"
 
         [whitelist]
-        prefix = [ "~/Projekte", "~/Projects" ]
+        prefix = [ "~/Projekte", "~/Projects", "~/Dokumente/", "~/Documents" ]
       '';
 
       # The UNIX file mode bits
