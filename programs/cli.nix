@@ -48,23 +48,16 @@
     # Faster, cached and persistent use_nix/use_flake. This keeps installed
     # shells even after garbage collection has been run.
     nix-direnv.enable = true;
-  };
 
-  # Nixos rewrites DIRENV_CONFIG to /etc/direnv - this causes ~/.config/direnv/direnv.toml
-  # not being found. We can configure some common options in etc though:
-  environment.etc = {
-    # Creates /etc/nanorc
-    "direnv/direnv.toml" = {
-      text = ''
-        [global]
-        warn_timeout = "5m"
-
-        [whitelist]
-        prefix = [ "~/Projekte", "~/Projects", "~/Dokumente/", "~/Documents" ]
-      '';
-
-      # The UNIX file mode bits
-      mode = "0444";
+    # Define some global settings.
+    # ATTENTION: the direnv packages has a history of ignoring these settings for some reason. There are several issue
+    # reports on their github regarding this. You might want to add these settings to your ~/.config/direnv/direnv.toml
+    # too. Just in case ;-)
+    settings = {
+      global = { warn_timeout = "5m"; };
+      whitelist = {
+        prefix = [ "~/Projekte" "~/Projects" "~/Dokumente/" "~/Documents" ];
+      };
     };
   };
 }
