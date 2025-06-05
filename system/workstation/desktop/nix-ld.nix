@@ -30,7 +30,7 @@
 let
   # Tiny tool to set LD_LIBRARY_PATH and run the specified command
   nixify = pkgs.writeShellScriptBin "nixify" ''
-    LD_LIBRARY_PATH=/run/opengl-driver/lib:$LD_LIBRARY_PATH:/run/current-system/sw/share/nix-ld/lib
+    export LD_LIBRARY_PATH=/run/opengl-driver/lib:$LD_LIBRARY_PATH:/run/current-system/sw/share/nix-ld/lib
     echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
     exec "$@"
   '';
@@ -44,7 +44,7 @@ in {
     pkgs.steam-run
   ];
 
-  # Prebuild tools are used in many dev environemnts. For example,
+  # Prebuild tools are used in many dev environments. For example,
   # electron delivered via npm. To make these work in NixOS, find
   # their dependencies and add them here. To get the list of libs, use:
   #
@@ -79,13 +79,12 @@ in {
     freetype
 
     # Graphics
-    # List the non-hardware dependent libs here. I.e. mesa. Do not list vulkan
-    # or cuda/opencl things here
+    # List the **non-hardware dependent** libs here. I.e. mesa.
     mesa
     libdrm
     libglvnd
     libGL
-    # SHould be in /run/opengl-driver/lib already?!
+    # Should be in /run/opengl-driver/lib already?!
     # mesa.drivers
     # vulkan-loader
 

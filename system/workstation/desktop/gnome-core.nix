@@ -5,7 +5,7 @@
   # Gnome Core
   #
 
-  services.xserver.desktopManager.gnome = {
+  services.desktopManager.gnome = {
     enable = true;
 
     # Add some GSettings and custom overrides? Be careful. There are some

@@ -360,6 +360,9 @@
     gpuOffset = -50;
   };
 
+  #hardware.openrazer.enable = true;
+  #hardware.openrazer.users = [ "seb" ];
+
   #############################################################################
   # Other Host Configuration Modules
   #

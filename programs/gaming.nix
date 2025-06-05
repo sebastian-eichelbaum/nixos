@@ -34,6 +34,8 @@
   programs.gamemode.enableRenice = true;
   programs.gamemode.settings = {
     general = {
+      reaper_freq = 5;
+
       # Negated and used as nice value
       renice = 0;
       desiredgov = "performance";
@@ -59,11 +61,9 @@
     custom = {
       start = ''
         ${pkgs.libnotify}/bin/notify-send -i applications-games "GameMode" "Started"
-          ${pkgs.systemd}/bin/systemctl --user stop picom.service
       '';
       end = ''
         ${pkgs.libnotify}/bin/notify-send -i applications-games "GameMode" "Stopped"
-          ${pkgs.systemd}/bin/systemctl --user start picom.service
       '';
     };
   };

@@ -68,7 +68,7 @@
 
     # Very nice for big directory comparisons
     meld
-    # gittyup
+    gittyup
 
     ###########################################################################
     # Development: Unity
@@ -99,8 +99,6 @@
 
     # Contains the required tools too run CUDA stuff and nvcc.
     cudatoolkit
-    # Random number generation
-    cudaPackages.libcurand
 
     ###########################################################################
     # Development: Android
@@ -111,6 +109,17 @@
 
     #android-studio
     #android-studio-tools
+
+    ###########################################################################
+    # AI tools
+    #
+
+    # Tabby is self-hosted, supports multiple models.
+    (pkgs.tabby.override {
+      cudaSupport = true;
+      acceleration = "cuda";
+    })
+    tabby-agent # required for the vim plugins
 
   ];
 

@@ -75,15 +75,54 @@
   hardware.graphics.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
 
   #############################################################################
+  # CUDA
+  #
+
+  # Enable support in installed packages globally? DO NOT DO THIS.
+  # nixpkgs.config.cudaSupport = true;
+
+  # Do not set cudaSupport globally! This will cause a huge re-build (Cuda=Unfree, so its not cached by Nix)
+  # Instead, activate CUDA for those packages where you need it:
+  #
+  # environment.systemPackages = with pkgs; [
+  #  (pkgs.btop.override { cudaSupport = true; })
+  # ];
+
+  # Ensure programs find these libs
+  programs.nix-ld.libraries = with pkgs; [
+    cudatoolkit
+    cudaPackages.libcublas
+    cudaPackages.cuda_cudart
+    cudaPackages.cudnn
+    cudaPackages.libcurand
+  ];
+
+  #############################################################################
   # Software
   #
 
-  # Testing tools. Do not install. Use:
-  #  * nix-shell -p vulkan-tools --run vkcube
-  #  * nix-shell -p vdpauinfo --run vdpauinfo
-  #  * nix-shell -p opencl-info --run opencl-info
-  #  * nix-shell -p libva-utils --run vainfo
+  environment.systemPackages = with pkgs; [
+    ##########################################################################
+    # Cuda
 
-  # glxinfo is needed by the game-run script.
-  environment.systemPackages = with pkgs; [ glxinfo ];
+    # Install the toolkit itself and some CUDA libs that are very common
+    cudatoolkit
+    cudaPackages.libcublas
+    cudaPackages.cuda_cudart
+    cudaPackages.cudnn
+    cudaPackages.libcurand
+
+    ##########################################################################
+    # Testing tools
+
+    # glxinfo is needed by the game-run script.
+    glxinfo
+    #vkcube
+    #vdpauinfo
+    #opencl-info
+    #vainfo
+
+    # Show GPU Usage: nvtop
+    nvtopPackages.full
+  ];
 }
