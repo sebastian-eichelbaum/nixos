@@ -53,6 +53,7 @@
 
     ## > Web stuff
     typescript-language-server
+    vue-language-server
     nodePackages.prettier
 
     ## > Scripting and system stuff
@@ -113,13 +114,6 @@
     ###########################################################################
     # AI tools
     #
-
-    # Tabby is self-hosted, supports multiple models.
-    (pkgs.tabby.override {
-      cudaSupport = true;
-      acceleration = "cuda";
-    })
-    tabby-agent # required for the vim plugins
 
   ];
 

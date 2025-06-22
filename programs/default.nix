@@ -14,5 +14,8 @@
     # Work stuff
     ./coding.nix
     ./virtualisation.nix
+
+    # AI Tools
+    ./ai.nix
   ];
 }
