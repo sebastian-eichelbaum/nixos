@@ -113,7 +113,7 @@
   #
 
   # Which kernel to use? Zen is quite optimized for desktop use
-  #boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   boot = {
     # Kernel parameters
