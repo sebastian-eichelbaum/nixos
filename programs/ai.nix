@@ -16,7 +16,7 @@
       #  cudaSupport = true;
       #  acceleration = "cuda";
       #})
-      tabby-agent # required for the vim plugins
+      # tabby-agent # required for the vim plugins
 
     ];
 

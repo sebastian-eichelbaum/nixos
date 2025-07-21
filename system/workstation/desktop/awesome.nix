@@ -76,7 +76,6 @@
 
     # Launchers
     rofi
-    rofi-pass
 
     # Allow to ask for passwords graphically
     pinentry-gnome3
