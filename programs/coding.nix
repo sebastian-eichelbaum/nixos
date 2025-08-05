@@ -4,20 +4,7 @@
 
 { config, lib, pkgs, ... }:
 
-let
-  # See https://lazamar.co.uk/nix-versions/?channel=nixos-unstable&package=unityhub
-  oldPkgs = import (builtins.fetchGit {
-    # Descriptive name to make the store path easier to identify
-    name = "my-old-revision";
-    url = "https://github.com/NixOS/nixpkgs/";
-    ref = "refs/heads/nixpkgs-unstable";
-    rev = "3e2cf88148e732abc1d259286123e06a9d8c964a";
-  }) {
-
-    config.allowUnfree = true;
-  };
-in {
-
+{
   # Ensure that all runtimes are enabled. Neovim itself is enabled as system default
   # editor already.
   programs.neovim = {
@@ -89,7 +76,7 @@ in {
     #
 
     # Ensure some mandatory packages are in unity's path
-    (oldPkgs.unityhub.override {
+    (unityhub.override {
       extraLibs = pkgs:
         with pkgs; [
           # Without this, the vulkan libs will not be found -> no vulkan

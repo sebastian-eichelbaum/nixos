@@ -9,9 +9,7 @@
   #
 
   # Set the timeout of SystemD to 30s. Default is 90s.
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=30s
-  '';
+  systemd.settings.Manager = { DefaultTimeoutStopSec = "30s"; };
 
   # Journal keeps growing and growing. Limit.
   services.journald.extraConfig = "SystemMaxUse=100M";
