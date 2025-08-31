@@ -57,6 +57,7 @@
     ferdium
     thunderbird
     protonmail-desktop
+    signal-desktop
 
     anydesk
 
