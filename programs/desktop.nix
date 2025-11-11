@@ -48,6 +48,7 @@
     cifs-utils
 
     proton-pass
+    proton-authenticator
 
     ###########################################################################
     # Communication tools
