@@ -237,7 +237,7 @@
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   # Makes better use of efficiency cores on newer intel machines
-  services.thermald.enable = false;
+  services.thermald.enable = true;
 
   # Nix enables the power profiles tool by default. Unfortunately, it does not
   # switch automatically on bat/ac.
@@ -359,9 +359,6 @@
     analogioOffset = -50;
     gpuOffset = -50;
   };
-
-  #hardware.openrazer.enable = true;
-  #hardware.openrazer.users = [ "seb" ];
 
   #############################################################################
   # Other Host Configuration Modules

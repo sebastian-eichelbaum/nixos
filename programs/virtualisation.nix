@@ -8,8 +8,8 @@
 
       qemu = {
         # An UEFI implementation. Required for Win11
-        ovmf.enable = true;
-        ovmf.packages = [ pkgs.OVMFFull.fd ];
+        # ovmf.enable = true;
+        # ovmf.packages = [ pkgs.OVMFFull.fd ];
 
         # Allow software TPM emulation. Required for Win11
         swtpm.enable = true;

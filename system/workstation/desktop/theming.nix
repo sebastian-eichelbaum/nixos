@@ -9,12 +9,13 @@
     # Commonly used fonts
     liberation_ttf
     dejavu_fonts
-    ubuntu_font_family
+    ubuntu-classic
     roboto
     noto-fonts
 
     # Fancy icon fonts. Used in my AwesomeWM config.
     font-awesome
+    font-awesome_6
     font-awesome_5
 
     # Default font used in my kitty terminal
@@ -37,13 +38,6 @@
 
     # An GTK3 Theme that re-uses the GTK4 libadwaita style for GTK3 apps.
     adw-gtk3
-
-    # Tool to configure the colors of libadwaita/gtk4 apps.
-    gradience
-
-    # ATTENTION: All the nice GTK themes, like "Fluent" are not working
-    #            properly. Forget about them. Use gradience to colorize
-    #            the libadwaita/gtk4 themes.
   ];
 
   # NOTE: since Gnome 43, the gtk-theme and icon-theme setting in gsettings

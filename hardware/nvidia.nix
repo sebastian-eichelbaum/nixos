@@ -116,7 +116,7 @@
     # Testing tools
 
     # glxinfo is needed by the game-run script.
-    glxinfo
+    mesa-demos
     #vkcube
     #vdpauinfo
     #opencl-info

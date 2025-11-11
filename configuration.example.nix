@@ -31,15 +31,15 @@
     # Add these keys to the list of authorized keys for the created user&root.
     authorizedKeys = [
       # Add more ssh public keys:
-      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb seb@worky"
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb soph@worky"
     ];
 
     # The single main user:
     user = {
-      realName = "Sebastian";
+      realName = "Sophia";
 
       # Login name
-      name = "seb";
+      name = "soph";
 
       # Use mkpasswd. (Considered a secret!)
       passHash = "abcdefghijklmnopqrstuvwxyz";
@@ -47,7 +47,7 @@
       # Additional user groups. Also check system/user.nix
       extraGroups = [ ];
 
-      # Add ssh pub keys as authorized keys for this user. Will be merged with the 
+      # Add ssh pub keys as authorized keys for this user. Will be merged with the
       # global authorizedKeys value.
       authorizedKeys = [ ];
     };
