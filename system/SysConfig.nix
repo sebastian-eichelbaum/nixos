@@ -31,7 +31,7 @@
     SysConfig.authorizedKeys = lib.mkOption {
       type = lib.types.listOf (lib.types.str);
       default = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb seb@worky"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIz2weQ+ATNAbRmMazQrFOW2TdYQj4VlPr+3CuCNiMeb soph@worky"
       ];
       description =
         "SSH public keys that are authorized by default for the main user and root. This ensures that you can log into that machine.";
@@ -45,13 +45,13 @@
       realName = lib.mkOption {
         type = lib.types.str;
         description = "The main user's real name";
-        default = "Sebastian";
+        default = "Sophia";
       };
 
       name = lib.mkOption {
         type = lib.types.str;
         description = "The main user's login name";
-        default = "seb";
+        default = "soph";
       };
 
       passHash = lib.mkOption {

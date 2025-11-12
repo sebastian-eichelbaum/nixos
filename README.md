@@ -58,16 +58,19 @@ the created config is only relevant for initial hardware configuration.
 
 - Prepare
   ```sh
-  mkdir -p /etc
-  cd /etc
-  git clone git@github.com:sebastian-eichelbaum/nixos.git
+  mkdir -p /mnt/etc
+  cd /mnt/etc
+  # Clone the public http-based repo as we do not have setup any SSH keys.
+  # Update the remote later.
+  git clone https://github.com/sebastian-eichelbaum/nixos.git
   cd nixos
   ```
 - Generate the machine configuration, if needed. Usually, the easiest way to get new hardware running is to use one of the already existing machines as a template:
 
   ```sh
+  cd /mnt/etc/nixos
   # Copy some existing machine and use as template for the new MyMachine
-  cd /etc/nixos/machines && cp someMachineAsTemplate.nix MyMachine.nix
+  cd machines && cp someMachineAsTemplate.nix MyMachine.nix
   # Let NixOS create some hardware config:
   nixos-generate-config --root /mnt --show-hardware-config > hardware-configuration.nix
 
@@ -81,7 +84,7 @@ the created config is only relevant for initial hardware configuration.
 - Create the local configuration
 
   ```sh
-  cd /etc/nixos
+  cd /mnt/etc/nixos
   cp configuration.example.nix configuration.nix
 
   # Edit configuration.nix. It is the entry point and refers to
@@ -94,7 +97,10 @@ the created config is only relevant for initial hardware configuration.
 
 - (Optional but recommended) Update to the unstable channel before install
   - `nix-channel --add https://nixos.org/channels/nixos-unstable nixos`
+  - `nix-channel --update`
 - `nixos-install`
+  - This installs into /mnt, using the config in /mnt/etc/nixos
+  - You will be asked to set a root password. After installation, this does not matter as the config sets the password.
 
 ## Recipes
 

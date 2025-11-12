@@ -10,3 +10,6 @@ configuration.nix
 
 # Do not track the result dir
 result
+
+# Exclude VIM swap files
+*.swp
