@@ -16,6 +16,10 @@
     # Log file? By default, Nix disables this to force x log to the journal.
     # logFile = "/var/log/Xorg.0.log";
 
+    # Enable TearFree by default - PSR and VRR on AMD and Intel GPUs seem to cause update issues when this is off.
+    # Test temporarily by running `xrandr --set "TearFree" "off"` and see if this breaks screen refresh.
+    enableTearFree = lib.mkDefault true;
+
     # Login manager
     displayManager = {
 
@@ -81,10 +85,6 @@
       [
         # Allow VDPAU to use VAAPI
         libvdpau-va-gl
-
-        # Allow VAAPI to use VDPAU drivers? Consider this when uzing proprieatary
-        # NVIDIA drivers
-        # vaapiVdpau
       ];
 
   };
@@ -99,7 +99,9 @@
 
   # Add some common X tools
   environment.systemPackages = with pkgs; [
+    ##########################################################################
     # Xorg base tools (some commonly used subset of them)
+
     xorg.xmessage # print messages. Used for errors in early setup stages.
     xorg.xev # xev - the x event debugger
     xorg.xset # xset - the x settings tool
@@ -118,6 +120,16 @@
     # Implement the XSETTINGS protocol. Apps that use Gtk listen to this. It is used to inform about DPI changes and
     # other settings. See https://codeberg.org/derat/xsettingsd
     xsettingsd
+
+    ##########################################################################
+    # Testing tools
+
+    # Tools to check GPU capabilities and features
+    mesa-demos # glxinfo - is needed by the game-run script.
+    vulkan-tools # for vulkaninfo
+    clinfo # for clinfo
+    libva-utils # for vainfo
+    vdpauinfo
   ];
 
   # Disable the annoying bell.

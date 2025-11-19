@@ -27,7 +27,6 @@
 
     lazygit # Nice git history browser
     mr # repo management
-    mani # repo management. Nice replacement for mr.
 
     ncdu # disk usage utility
 

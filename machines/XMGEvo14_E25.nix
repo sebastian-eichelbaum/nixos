@@ -7,7 +7,7 @@
 
 {
   #############################################################################
-  # Filesystem Setup
+  # {{{1 Filesystem Setup
   #
 
   # NOTE: if those FS are on crypted disks, ensure they are listed in
@@ -73,9 +73,13 @@
   # especially since it is run every week or so. Just enable it.
   services.fstrim.enable = true;
 
+  # }}}
+
   #############################################################################
-  # Crypto Setup
+  # {{{ Crypto Setup
   #
+
+  # Refer to the README on how to format LUKS devices and set up keys.
 
   # Only root is needed for booting. To avoid unlocking home in initrd, it is
   # Listed in crypttab and uses a keyfile to unlock:
@@ -87,34 +91,42 @@
   # NOTE: the options are to optimize for SSD. discard=allow_discards
   environment.etc."crypttab".text = ''
     # <target name>	<source device>		<key file>	<options>
-    crypthome /dev/disk/by-uuid/74e5d634-09af-4661-8742-acbf4471f6c4 /root/crypthome.disk.key discard,no-read-workqueue,no-write-workqueue
+    crypthome /dev/disk/by-uuid/3498deee-ceb9-4550-82a7-d83f70ef6b78 /root/crypthome.disk.key discard,no-read-workqueue,no-write-workqueue
   '';
 
+  # }}}
+
   #############################################################################
-  # Kernel and initrd Setup
+  # {{{ Kernel and Boot Setup
   #
 
   # Which kernel to use? Zen is quite optimized for desktop use
-  # boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
   boot = {
     # Kernel parameters
     kernelParams = [
-      #"i915.fastboot=1"
-      #"button.lid_init_state=open"
+      "button.lid_init_state=open"
+
+      #   "acpi_backlight=native"
+      #  "amd_pstate=guided"
+      #"iommu=soft"
 
       # This makes some games perform better. But it is hard to find information on
       # what this actually does and how it affects other processes/the system
       # "split_lock_detect=off"
 
       # Fix the PSR issues - if the screen only refreshes when moving the mouse, use this.
-      "amdgpu.dcdebugmask=0x10"
+      "amdgpu.dcdebugmask=0x12"
+
+      # The default for AMD pstate is "active", Also possible: "passive" and "guided"
+      "amd_pstate=guided"
     ];
 
-    # Initial ramdisk setup
+    # {{{ Initial ramdisk setup
     initrd = {
       # Always loaded from initrd
-      kernelModules = lib.mkAfter [
+      kernelModules = lib.mkBefore [
         # "amdgpu" # Loaded by default? Handled by hardware.amdgpu.initrd.enable = true
       ];
 
@@ -138,11 +150,12 @@
         "sd_mod"
 
         # Crypt hardware support
-        #"aesni_intel"
-        #"crypto_simd"
-        #"cryptd"
+        "aesni_intel"
+        # "crypto_simd"
+        "cryptd"
 
         "kvm-amd"
+        # "amdgpu"
       ];
 
       luks.devices = {
@@ -168,6 +181,7 @@
         };
       };
     };
+    # }}}
 
     # Load these during the second boot stage
     kernelModules = [ ];
@@ -183,34 +197,108 @@
     blacklistedKernelModules = [ ];
   };
 
+  # }}}
+
   #############################################################################
-  # Hardware specifics
+  # {{{ Hardware specifics
   #
 
-  hardware.cpu.intel.updateMicrocode = false;
+  # {{{ CPU
+  # Update the microcode for AMD CPUs
   hardware.cpu.amd.updateMicrocode = true;
 
-  # use intel vaapi.
-  #hardware.graphics.extraPackages = with pkgs; [ intel-media-driver ];
+  # Enable the Ryzen SMU driver for better power management and monitoring.
+  hardware.cpu.amd.ryzen-smu.enable = true;
 
-  # Use intel va driver by default.
-  #environment.variables = { LIBVA_DRIVER_NAME = lib.mkDefault "iHD"; };
+  # Allow write-access to CPU MSR
+  hardware.cpu.x86.msr = {
+    enable = true;
+    settings = { allow-writes = "on"; };
+  };
+  # }}}
+
+  # {{{ GPU
+
+  # amdgpu to be used in X - using this explicitly to avoid issues with variable
+  # refresh rate displays.
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
+  # Ensure the amdgpu driver is loaded early to have a proper resolution during
+  # boot?
+  #
+  # - Be aware that this behaves strange from time to time. Sometimes the
+  # docked display shows something, sometimes not. Test if you need this! It is
+  # sufficient to have it loaded later and used in xserver.
+  hardware.amdgpu.initrd.enable = false;
+
+  # {{{ GPU Compute support
+
+  # Enable OpenCL for AMD GPU
+  hardware.amdgpu.opencl.enable = true;
+  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+
+  # Enable ROCm support
+  environment.systemPackages = with pkgs; [
+    # Install ROCm runtime globally
+    rocmPackages.rocm-runtime
+
+    ##########################################################################
+    # Testing tools
+
+    # Show GPU Usage: nvtop
+    nvtopPackages.amd
+    amdgpu_top
+    rocmPackages.rocminfo
+  ];
+
+  systemd.tmpfiles.rules = let
+    rocmEnv = pkgs.symlinkJoin {
+      name = "rocm-combined";
+      paths = with pkgs.rocmPackages; [ rocblas hipblas clr ];
+    };
+  in [ "L+    /opt/rocm   -    -    -     -    ${rocmEnv}" ];
+
+  # }}}
+
+  # }}}
+
+  # }}}
 
   #############################################################################
-  # Power Configuration
+  # {{{ Power Configuration
   #
 
+  # This is highly specific to the model, your hardware and your usage. A good
+  # starting point is to check powertop for a list of tuneables.
+
+  # {{{ General Power Management settings
+
+  # Generally enable some basic power management features
   powerManagement.enable = true;
 
-  # The kernel sets this to max_performance by default. This machine has two SSD,
-  # so setting a more power saving setting can save a few watts!
+  # Enable Wifi PowerSave mode. Good idea? Any real use?
+  networking.networkmanager.wifi.powersave = true;
+
+  # Powertop can tweak some settings automatically on boot. BUT this can
+  # cause some issues with certain hardware. Instead, consider using udev
+  # rules and a power manager.
+  powerManagement.powertop.enable = false;
+
+  # The kernel sets this to max_performance by default. This machine has
+  # two SSD, so setting a more power saving setting can save a few watts!
+  #
+  # You probably wont need to set this as some power managers (i.e. tlp)
+  # will set this automatically, and only when on battery.
   # powerManagement.scsiLinkPolicy = "med_power_with_dipm";
 
-  # P-States magic makes this superfluous.
+  # Controls how the amd P-States magic works. "powersave" and "performance"
+  # are available. Performance is basically the same like "powersave" but with
+  # much lower latencies when ramping up the CPU frequency.
+  #
+  # BUT: when using a power manager like TLP, this will be managed for us.
   # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  # Makes better use of efficiency cores on newer intel machines
-  #services.thermald.enable = true;
+  # }}}
 
   # Nix enables the power profiles tool by default. Unfortunately, it does not
   # switch automatically on bat/ac.
@@ -219,7 +307,7 @@
   services.tlp.enable = true;
   services.tlp.settings = { SATA_LINKPWR_ON_BAT = "med_power_with_dipm"; };
 
-  services.cpupower-gui.enable = false;
+  # services.cpupower-gui.enable = false;
   #services.auto-cpufreq = {
   #    enable = true;
   #    settings = {
@@ -233,14 +321,6 @@
   #      };
   #    };
   #  };
-
-  # Enable Wifi PowerSave mode. Good idea? Any real use?
-  networking.networkmanager.wifi.powersave = true;
-
-  # Be warned. Enabling this activates a lot of power saving features but can
-  # also mess up laptop keybords and mouse. This config uses udev rules to be
-  # more specific.
-  # powerManagement.powertop.enable = true;
 
   boot = {
     # Check the current parameters of a module:
@@ -321,25 +401,70 @@
   #  analogioOffset = -50;
   #  gpuOffset = -50;
   #};
+  # }}}
 
-  # Ensure the amdgpu driver is loaded early to have a proper resolution during boot
-  hardware.amdgpu.initrd.enable = true;
+  #############################################################################
+  # AMD GPU
+  #
+
+  #############################################################################
+  # Tools
+  #
+
+  # Allows to get a lot of CPU stats and settings
+  programs.ryzen-monitor-ng.enable = true;
+
+  services.autorandr.profiles = {
+    "Mobile" = {
+      fingerprint = {
+        "eDP-1" =
+          "00ffffffffffff000e7731140000000000210104b51e1378032f55a6544c9b240d505400000001010101010101010101010101010101178840a0b0086e70302066002dbc10000018000000fd001e78e6e646010a202020202020000000fe0043534f542054330a2020202020000000fc004d4e453030375a41332d320a2001cc7020790200220014bfa10a853f0b9f002f001f0007076d00050005002b000c27001e77000027001e3b0000810015741a000003511e780000000000007800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b90";
+      };
+      config = {
+        "eDP-1" = {
+          enable = true;
+          primary = true;
+          mode = "2880x1800";
+          position = "0x0";
+          rate = "120"; # Lower rate saves roughly 1W power on idle.
+          dpi = 140;
+        };
+      };
+    };
+
+    "Docked" = {
+      fingerprint = {
+        "eDP-1" =
+          "00ffffffffffff000e7731140000000000210104b51e1378032f55a6544c9b240d505400000001010101010101010101010101010101178840a0b0086e70302066002dbc10000018000000fd001e78e6e646010a202020202020000000fe0043534f542054330a2020202020000000fc004d4e453030375a41332d320a2001cc7020790200220014bfa10a853f0b9f002f001f0007076d00050005002b000c27001e77000027001e3b0000810015741a000003511e780000000000007800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b90";
+        "DP-2" =
+          "00ffffffffffff001e6dd25b20b70000041f010380462778ea8cb5af4f43ab260e5054210800d1c06140010101010101010101010101e9e800a0a0a0535030203500b9882100001a000000fd0030901ee63c000a202020202020000000fc004c4720554c545241474541520a000000ff003130344e54504331433838300a013102034cf1230907074d100403011f13123f5d5e5f60616d030c001000b83c20006001020367d85dc401788003e30f00186d1a0000020430900004614f614fe2006ae305c000e606050161614f6fc200a0a0a0555030203500b9882100001a565e00a0a0a0295030203500b9882100001a000000000000000000000000000000e8";
+      };
+      config = {
+        "eDP-1" = {
+          enable = false;
+          primary = false;
+        };
+        "DP-2" = {
+          enable = true;
+          primary = true;
+          mode = "2560x1440";
+          position = "0x0";
+          rate = "120";
+          dpi = 96;
+        };
+      };
+    };
+  };
 
   #############################################################################
   # Other Host Configuration Modules
   #
 
   imports = [
-    # This machine uses nvidia prime
-    #../hardware/nvidia-prime.nix
     # Use Logitech input devices
     ../hardware/logitech-hid.nix
     # Use the Brother scanner
     ../hardware/Brother_ADS-1700W.nix
-    # The Razer laptop controls. Allows to setup power states/light/...
-    # ../hardware/razer-laptop-control.nix
-    # sof-audio speaker fix. Without this, the laptop does not play sound via speakers.
-    #../quirks/snd_sof_speakerfix.nix
   ];
 
   # Apply the correct color profile (icm,icc) for this device

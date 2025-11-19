@@ -70,7 +70,6 @@
 
     # Sometimes works better for streamed media consumption
     google-chrome
-
   ];
 
   #############################################################################

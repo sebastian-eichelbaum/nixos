@@ -95,11 +95,12 @@
     dotnet-sdk_8
 
     ###########################################################################
-    # Development: Cuda
+    # Development: GPU Programming - Cuda/ROCm
     #
 
-    # Contains the required tools too run CUDA stuff and nvcc.
-    cudatoolkit
+    # NOTE: I chose to install these in the flake/direnv of projects that need them
+    # cudatoolkit
+    # rocmPackages.rocm-runtime
 
     ###########################################################################
     # Development: Android
@@ -110,10 +111,6 @@
 
     #android-studio
     #android-studio-tools
-
-    ###########################################################################
-    # AI tools
-    #
 
   ];
 
