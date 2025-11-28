@@ -80,7 +80,7 @@
     enable = true;
 
     # Native hosts:
-    nativeMessagingHosts.packages = with pkgs; [ passff-host tridactyl-native ];
+    # nativeMessagingHosts.packages = with pkgs; [ passff-host tridactyl-native ];
 
     # Note: this is not the dictionary list.
     languagePacks = [ "en-US" "de" ];

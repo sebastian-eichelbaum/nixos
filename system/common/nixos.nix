@@ -62,7 +62,7 @@
   # Ensure all terminfo are installed to avoid ssh-ing into a machine that
   # does not understand your terminal. I.e. kitty uses zterm-kitty that would
   # trigger an invalid term definition alert.
-  environment.enableAllTerminfo = true;
+  environment.enableAllTerminfo = lib.mkDefault true;
 
   #############################################################################
   # Nix house-holding Setup
