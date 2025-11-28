@@ -8,7 +8,7 @@
   # Games and emulators
   environment.systemPackages = with pkgs; [
     # Game launchers and stores
-    steam
+    # steam
     # lutris
     heroic
 
@@ -23,6 +23,13 @@
     # Prevents screensaver/xset dpms when gamepads are used
     joystickwake
   ];
+
+  # Enable steam and add some extra packages
+  programs.steam = {
+    enable = true;
+    extraPackages = with pkgs; [ gamescope ];
+    extraCompatPackages = with pkgs; [ proton-ge-bin ];
+  };
 
   #############################################################################
   # Gamemode support
@@ -72,10 +79,8 @@
   # Gamescope support
   #
 
-  # Has issues with NVIDIA drivers. Disabled for now.
-
   # Gamescope is a tiny compositor to run games in, allowing to spoof
   # resolutions and limit FPS for games that do not support that.
-  # programs.gamescope.enable = true;
-  # programs.gamescope.capSysNice = true;
+  programs.gamescope.enable = true;
+  programs.gamescope.capSysNice = true;
 }

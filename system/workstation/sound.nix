@@ -25,7 +25,7 @@
     pulse.enable = true;
 
     # Legacy stuff: old games maybe?
-    alsa.support32Bit = false;
+    alsa.support32Bit = lib.mkDefault false;
   };
 
   # Pavucontrol to manage audio

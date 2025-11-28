@@ -117,7 +117,7 @@
       # "split_lock_detect=off"
 
       # Fix the PSR issues - if the screen only refreshes when moving the mouse, use this.
-      "amdgpu.dcdebugmask=0x12"
+      # "amdgpu.dcdebugmask=0x12"
 
       # The default for AMD pstate is "active", Also possible: "passive" and "guided"
       "amd_pstate=guided"
@@ -219,9 +219,7 @@
 
   # {{{ GPU
 
-  # amdgpu to be used in X - using this explicitly to avoid issues with variable
-  # refresh rate displays.
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  # see hardware/amdgpu.nix
 
   # Ensure the amdgpu driver is loaded early to have a proper resolution during
   # boot?
@@ -229,35 +227,65 @@
   # - Be aware that this behaves strange from time to time. Sometimes the
   # docked display shows something, sometimes not. Test if you need this! It is
   # sufficient to have it loaded later and used in xserver.
-  hardware.amdgpu.initrd.enable = false;
+  hardware.amdgpu.initrd.enable = lib.mkDefault false;
 
-  # {{{ GPU Compute support
+  services.xserver.deviceSection = ''Option "VariableRefresh" "true"'';
 
-  # Enable OpenCL for AMD GPU
-  hardware.amdgpu.opencl.enable = true;
-  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+  # }}}
 
-  # Enable ROCm support
-  environment.systemPackages = with pkgs; [
-    # Install ROCm runtime globally
-    rocmPackages.rocm-runtime
+  # {{{ Display (Color) Profile
+  #
+  # Apply the correct color profile (icm,icc) for this device
+  # services.xserver.displayManager.sessionCommands = ''
+  #   # load if present
+  #   profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16.icm
+  #   if [ -f $profile ]; then
+  #     xcalib -output eDP-0 $profile
+  #   fi
+  # '';
 
-    ##########################################################################
-    # Testing tools
-
-    # Show GPU Usage: nvtop
-    nvtopPackages.amd
-    amdgpu_top
-    rocmPackages.rocminfo
-  ];
-
-  systemd.tmpfiles.rules = let
-    rocmEnv = pkgs.symlinkJoin {
-      name = "rocm-combined";
-      paths = with pkgs.rocmPackages; [ rocblas hipblas clr ];
+  # {{{ Display Setup with autorandr for Docked/Mobile profiles
+  services.autorandr.profiles = {
+    "Mobile" = {
+      fingerprint = {
+        "eDP-1" =
+          "00ffffffffffff000e7731140000000000210104b51e1378032f55a6544c9b240d505400000001010101010101010101010101010101178840a0b0086e70302066002dbc10000018000000fd001e78e6e646010a202020202020000000fe0043534f542054330a2020202020000000fc004d4e453030375a41332d320a2001cc7020790200220014bfa10a853f0b9f002f001f0007076d00050005002b000c27001e77000027001e3b0000810015741a000003511e780000000000007800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b90";
+      };
+      config = {
+        "eDP-1" = {
+          enable = true;
+          primary = true;
+          mode = "2880x1800";
+          position = "0x0";
+          rate = "120"; # Lower rate saves roughly 1W power on idle.
+          dpi = 140;
+        };
+      };
     };
-  in [ "L+    /opt/rocm   -    -    -     -    ${rocmEnv}" ];
 
+    "Docked" = {
+      fingerprint = {
+        "eDP-1" =
+          "00ffffffffffff000e7731140000000000210104b51e1378032f55a6544c9b240d505400000001010101010101010101010101010101178840a0b0086e70302066002dbc10000018000000fd001e78e6e646010a202020202020000000fe0043534f542054330a2020202020000000fc004d4e453030375a41332d320a2001cc7020790200220014bfa10a853f0b9f002f001f0007076d00050005002b000c27001e77000027001e3b0000810015741a000003511e780000000000007800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b90";
+        "DP-2" =
+          "00ffffffffffff001e6dd25b20b70000041f010380462778ea8cb5af4f43ab260e5054210800d1c06140010101010101010101010101e9e800a0a0a0535030203500b9882100001a000000fd0030901ee63c000a202020202020000000fc004c4720554c545241474541520a000000ff003130344e54504331433838300a013102034cf1230907074d100403011f13123f5d5e5f60616d030c001000b83c20006001020367d85dc401788003e30f00186d1a0000020430900004614f614fe2006ae305c000e606050161614f6fc200a0a0a0555030203500b9882100001a565e00a0a0a0295030203500b9882100001a000000000000000000000000000000e8";
+      };
+      config = {
+        "eDP-1" = {
+          enable = false;
+          primary = false;
+        };
+        "DP-2" = {
+          enable = true;
+          primary = true;
+          mode = "2560x1440";
+          position = "0x0";
+          rate = "120";
+          dpi = 96;
+        };
+      };
+    };
+  };
   # }}}
 
   # }}}
@@ -404,60 +432,7 @@
   # }}}
 
   #############################################################################
-  # AMD GPU
-  #
-
-  #############################################################################
-  # Tools
-  #
-
-  # Allows to get a lot of CPU stats and settings
-  programs.ryzen-monitor-ng.enable = true;
-
-  services.autorandr.profiles = {
-    "Mobile" = {
-      fingerprint = {
-        "eDP-1" =
-          "00ffffffffffff000e7731140000000000210104b51e1378032f55a6544c9b240d505400000001010101010101010101010101010101178840a0b0086e70302066002dbc10000018000000fd001e78e6e646010a202020202020000000fe0043534f542054330a2020202020000000fc004d4e453030375a41332d320a2001cc7020790200220014bfa10a853f0b9f002f001f0007076d00050005002b000c27001e77000027001e3b0000810015741a000003511e780000000000007800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b90";
-      };
-      config = {
-        "eDP-1" = {
-          enable = true;
-          primary = true;
-          mode = "2880x1800";
-          position = "0x0";
-          rate = "120"; # Lower rate saves roughly 1W power on idle.
-          dpi = 140;
-        };
-      };
-    };
-
-    "Docked" = {
-      fingerprint = {
-        "eDP-1" =
-          "00ffffffffffff000e7731140000000000210104b51e1378032f55a6544c9b240d505400000001010101010101010101010101010101178840a0b0086e70302066002dbc10000018000000fd001e78e6e646010a202020202020000000fe0043534f542054330a2020202020000000fc004d4e453030375a41332d320a2001cc7020790200220014bfa10a853f0b9f002f001f0007076d00050005002b000c27001e77000027001e3b0000810015741a000003511e780000000000007800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008b90";
-        "DP-2" =
-          "00ffffffffffff001e6dd25b20b70000041f010380462778ea8cb5af4f43ab260e5054210800d1c06140010101010101010101010101e9e800a0a0a0535030203500b9882100001a000000fd0030901ee63c000a202020202020000000fc004c4720554c545241474541520a000000ff003130344e54504331433838300a013102034cf1230907074d100403011f13123f5d5e5f60616d030c001000b83c20006001020367d85dc401788003e30f00186d1a0000020430900004614f614fe2006ae305c000e606050161614f6fc200a0a0a0555030203500b9882100001a565e00a0a0a0295030203500b9882100001a000000000000000000000000000000e8";
-      };
-      config = {
-        "eDP-1" = {
-          enable = false;
-          primary = false;
-        };
-        "DP-2" = {
-          enable = true;
-          primary = true;
-          mode = "2560x1440";
-          position = "0x0";
-          rate = "120";
-          dpi = 96;
-        };
-      };
-    };
-  };
-
-  #############################################################################
-  # Other Host Configuration Modules
+  # {{{ Other Host Configuration Modules
   #
 
   imports = [
@@ -465,14 +440,10 @@
     ../hardware/logitech-hid.nix
     # Use the Brother scanner
     ../hardware/Brother_ADS-1700W.nix
+
+    # Uses and AMD GPU
+    ../hardware/amdgpu.nix
   ];
 
-  # Apply the correct color profile (icm,icc) for this device
-  # services.xserver.displayManager.sessionCommands = ''
-  #   # load if present
-  #   profile=$HOME/.colorprofiles/RazerBlade16_2023/Blade16.icm
-  #   if [ -f $profile ]; then
-  #     xcalib -output eDP-0 $profile
-  #   fi
-  # '';
+  # }}}
 }

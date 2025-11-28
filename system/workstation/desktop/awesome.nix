@@ -13,22 +13,22 @@
   # Build the latest awesome
   services.xserver.windowManager.awesome = {
     enable = true;
-    package = pkgs.awesome.overrideAttrs (old: {
-      src = pkgs.fetchFromGitHub {
-        owner = "awesomeWM";
-        repo = "awesome";
-        rev = "e6f5c7980862b7c3ec6c50c643b15ff2249310cc";
-        # Set this. Nix will complain and show the real hash
-        #sha256 = "sha256:0000000000000000000000000000000000000000000000000000";
-        sha256 = "sha256-afviu5b86JDWd5F12Ag81JPTu9qbXi3fAlBp9tv58fI=";
-      };
-
-      patches = [ ];
-
-      # Man and doc generation fails right now
-      cmakeFlags = old.cmakeFlags
-        ++ [ "-DGENERATE_MANPAGES=OFF" "-DGENERATE_DOC=off" ];
-    });
+    # package = pkgs.awesome.overrideAttrs (old: {
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "awesomeWM";
+    #     repo = "awesome";
+    #     rev = "e6f5c7980862b7c3ec6c50c643b15ff2249310cc";
+    #     # Set this. Nix will complain and show the real hash
+    #     #sha256 = "sha256:0000000000000000000000000000000000000000000000000000";
+    #     sha256 = "sha256-afviu5b86JDWd5F12Ag81JPTu9qbXi3fAlBp9tv58fI=";
+    #   };
+    #
+    #   patches = [ ];
+    #
+    #   # Man and doc generation fails right now
+    #   cmakeFlags = old.cmakeFlags
+    #     ++ [ "-DGENERATE_MANPAGES=OFF" "-DGENERATE_DOC=off" ];
+    # });
   };
 
   # }}}

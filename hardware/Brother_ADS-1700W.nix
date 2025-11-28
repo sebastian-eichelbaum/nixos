@@ -10,8 +10,11 @@
   services.openssh = {
     # To make the Brother Scanner work
     settings = {
-      KexAlgorithms =(options.services.openssh.settings.type.getSubOptions []).KexAlgorithms.default ++ [ "diffie-hellman-group14-sha1" ];
-      Macs = (options.services.openssh.settings.type.getSubOptions []).Macs.default ++ [ "hmac-sha1" ];
+      KexAlgorithms = (options.services.openssh.settings.type.getSubOptions
+        [ ]).KexAlgorithms.default ++ [ "diffie-hellman-group14-sha1" ];
+      Macs =
+        (options.services.openssh.settings.type.getSubOptions [ ]).Macs.default
+        ++ [ "hmac-sha1" ];
     };
 
     # Add some old key algorithms to make some older hardware work

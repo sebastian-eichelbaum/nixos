@@ -14,7 +14,7 @@
     # WARNING: some application desktop files are wierdly named. Check the contents
     # of the appropriate package for details
     defaultApplications = {
-      "application/pdf" = "org.gnome.Evince.desktop";
+      "application/pdf" = "org.gnome.Papers.desktop";
 
       # Images:
       "image/" =

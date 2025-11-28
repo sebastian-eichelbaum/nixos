@@ -26,4 +26,7 @@
 
   # Manage Wifi networks using the nm applet
   programs.nm-applet.enable = true;
+
+  # VPN Tools - only add common user-space tools here
+  environment.systemPackages = with pkgs; [ wireguard-tools ];
 }

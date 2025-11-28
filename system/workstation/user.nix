@@ -16,6 +16,7 @@
           "video"
           "plugdev"
           "input"
+          "render"
 
           # Allow virtualization
           "libvirtd"
