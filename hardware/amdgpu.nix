@@ -37,6 +37,12 @@
     # !!
     rocmPackages.rocm-runtime
     rocmPackages.clr
+    rocmPackages.clr.icd
+    rocmPackages.hipblas
+    rocmPackages.hipcc
+    rocmPackages.hiprt
+    rocmPackages.rocblas
+    rocmPackages.llvm.openmp
   ];
 
   #############################################################################
@@ -57,6 +63,7 @@
     rocmPackages.hipcc
     rocmPackages.hiprt
     rocmPackages.rocblas
+    rocmPackages.llvm.openmp
 
     ##########################################################################
     # Testing tools

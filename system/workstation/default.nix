@@ -19,6 +19,7 @@
     ./sound.nix
     ./xserver.nix
     ./bluetooth.nix
+    ./printing.nix
 
     ./services.nix
 
