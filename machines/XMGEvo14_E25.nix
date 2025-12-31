@@ -108,8 +108,6 @@
     kernelParams = [
       "button.lid_init_state=open"
 
-      #   "acpi_backlight=native"
-      #  "amd_pstate=guided"
       #"iommu=soft"
 
       # This makes some games perform better. But it is hard to find information on
@@ -127,7 +125,7 @@
     initrd = {
       # Always loaded from initrd
       kernelModules = lib.mkBefore [
-        # "amdgpu" # Loaded by default? Handled by hardware.amdgpu.initrd.enable = true
+        "amdgpu" # Loaded by default? Handled by hardware.amdgpu.initrd.enable = true
       ];
 
       # Modules that should be available in the initial ramdisk
@@ -155,7 +153,7 @@
         "cryptd"
 
         "kvm-amd"
-        # "amdgpu"
+        "amdgpu"
       ];
 
       luks.devices = {
@@ -227,7 +225,7 @@
   # - Be aware that this behaves strange from time to time. Sometimes the
   # docked display shows something, sometimes not. Test if you need this! It is
   # sufficient to have it loaded later and used in xserver.
-  hardware.amdgpu.initrd.enable = lib.mkDefault false;
+  hardware.amdgpu.initrd.enable = lib.mkDefault true;
 
   services.xserver.deviceSection = ''Option "VariableRefresh" "true"'';
 

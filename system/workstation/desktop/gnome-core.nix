@@ -105,7 +105,7 @@
     epiphany # web browser
     # gedit # text editor
     simple-scan # document scanner
-    #totem       # video player
+    # totem       # video player
     yelp # help viewer
     #evince      # document viewer
     #file-roller # archive manager
@@ -157,6 +157,9 @@
 
     # much more useful in comparison to loupe
     eog
+
+    # Showtime video player is trash. Basic functionality is missing.
+    totem
   ];
 
   # Required for some apps to work (to be able to query settings)
