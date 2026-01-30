@@ -18,6 +18,10 @@
     # Settings. Refer to picom manual for details.
     settings = {
 
+      #########################################################################
+      # {{{ General
+      #
+
       log-level = "warn";
 
       # The backend to use. This influences vsync functionality and blur
@@ -45,57 +49,38 @@
       glx-no-stencil = true;
       glx-no-rebind-pixmap = true;
 
+      # }}}
+
       #########################################################################
-      # Fading
+      # {{{ Fading
       #
 
+      # A fast fade-in/out
       fading = true;
-      fade-in-step = 0.1;
-      fade-out-step = 0.1;
+      fade-in-step = 0.133;
+      fade-out-step = 0.133;
       fade-delta = 10;
 
       # Do not fade on window open/close.
       no-fading-openclose = false;
 
-      # Specify a list of conditions of windows that should not be faded.
-      fade-exclude = [
-        # Prevents fullscreen active windows to flicker
-        # "focused"
-
-        # Exclude all but ROFI. It looks nice :-)
-        "window_type = 'normal' && class_g != 'Rofi'"
-      ];
+      # }}}
 
       #########################################################################
-      # Corners
+      # {{{ Shadows
       #
 
-      # corner-radius = 10;
-
-      #########################################################################
-      # Shadows
-      #
-
+      # Centered shadow
       shadow = true;
       shadow-offset-x = -50;
       shadow-offset-y = -50;
       shadow-opacity = 0.66;
       shadow-radius = 50;
 
-      # Exclude some types of windows as they create strange artefacts
-      shadow-exclude = [
-        "window_type != 'dock' && !focused"
-
-        "_GTK_FRAME_EXTENTS@"
-        # Firefox creates strange borders around menus. Disable shadows for FF
-        "class_g = 'Firefox' && argb"
-        "class_g = 'firefox' && argb"
-        # Qt Apps nutzen manchmal eigene styles und runde menus usw.
-        "_NET_WM_WINDOW_TYPE *= '_KDE_NET_WM_WINDOW_TYPE_OVERRIDE'"
-      ];
+      # }}}
 
       #########################################################################
-      # Transparency
+      # {{{ Transparency
       #
 
       # NOTE: most of this is handled by GTK, Qt and the Windowmanager anyways.
@@ -112,8 +97,10 @@
       # If true, picom overrides the settings provided by the window manager
       inactive-opacity-override = false;
 
+      # }}}
+
       #########################################################################
-      # Blur
+      # {{{ Blur
       #
 
       # Disable blur by commenting out these lines. Some blur methods only work with GLX as backend
@@ -124,126 +111,86 @@
 
       # Transparent window blur. Attention: might have some performance impact.
       blur-background = true;
+
       # Blur frames? Should be false. Tooltips in firefox have a frame that looks strange when blurring.
       blur-background-frame = false;
 
-      # Exclude some types of windows as they create strange artefacts
-      blur-background-exclude = [
-        # Disable for all windows except rofi?
-        #"window_type = 'normal' && class_g != 'Rofi'"
-
-        # Disable for some window types and GTK Frames.
-        "_GTK_FRAME_EXTENTS@"
-        #"window_type = 'dock'"
-        "window_type = 'desktop'"
-        "window_type *= 'menu'"
-      ];
+      # }}}
 
       #########################################################################
-      # Window type specific overrides
+      # {{{ Animations
       #
+      # Refer to https://picom.app/#_animations for details
 
-      # Not yet supported by nix. Produces a badly formatted rules definition
-      # rules = [
+      # Disabled. Looks nice but is annoying during work.
+      # animations = [
       #   {
-      #     match = "window_type = 'tooltip'";
-      #     blur = false;
-      #   },
+      #     triggers = [ "show" ];
+      #     preset = "appear";
+      #     scale = "0.5";
+      #   }
       #   {
-      #     match =
-      #       "window_type = 'dock' ||  window_type = 'desktop' || _GTK_FRAME_EXTENTS@";
-      #     blur-background = false;
-      #   },
+      #     triggers = [ "hide" ];
+      #     preset = "disappear";
+      #     scale = "0.5";
+      #   }
       #   {
-      #     match = "window_type = 'dock' || window_type = 'desktop'";
-      #     corner-radius = 0;
+      #     triggers = [ "geometry" ];
+      #     preset = "geometry-change";
       #   }
       # ];
 
-      wintypes = {
-        # GTK4 messes with those shadows
-        menu = {
-          fade = true;
+      # }}}
+
+      #########################################################################
+      # {{{ Window type specific overrides
+      #
+
+      # See: https://picom.app/#_window_rules
+
+      rules = [
+
+        # Disable fading for normal windows except Rofi
+        # This still fades menus, drop downs, ...
+        {
+          match = "window_type = 'normal' && class_g != 'Rofi'";
+          fade = false;
+        }
+
+        # Menus need some re-styling.
+        {
+          match =
+            "window_type *= 'menu' || window_type = 'dropdown_menu' || window_type = 'popup_menu' || window_type ='combo'";
+
+          # Those GTK menus use a blurred frame that looks strange. Disable blur.
+          blur-background = false;
+
+          # Enable full shadow to have shadows on menus? The shadows looks huge on GTK menus.
           shadow = false;
+          full-shadow = false;
+
+          # Menus should be a bit transparent
+          opacity = 0.95;
+        }
+
+        # Firefox has the same problem with those tab preview tooltips
+        {
+          match = "class_g = 'firefox'";
+          shadow = true;
           full-shadow = true;
-          opacity = 1.0;
-          focus = true;
-        };
-        dropdown_menu = {
-          fade = true;
-          shadow = true;
-          opacity = 0.95;
-          focus = true;
-        };
-        popup_menu = {
-          fade = true;
-          shadow = true;
-          opacity = 0.95;
-          focus = true;
-        };
-        combo = {
-          fade = true;
-          shadow = true;
-          opacity = 1.0;
-          focus = true;
-        };
+          blur-background = false;
+        }
 
-        dialog = {
-          fade = true;
-          shadow = true;
-          opacity = 1.0;
-          focus = true;
-        };
-        utility = {
-          fade = true;
-          shadow = true;
-          opacity = 1.0;
-          focus = true;
-        };
-        toolbar = {
-          fade = true;
-          shadow = true;
-          opacity = 1.0;
-          focus = true;
-        };
-        splash = {
-          fade = true;
-          shadow = true;
-          opacity = 1.0;
-          focus = true;
-        };
-
-        tooltip = {
-          fade = true;
+        # Window-manager dock
+        {
+          match = "window_type = 'dock'";
           shadow = true;
           opacity = 0.9;
-          focus = true;
-        };
-
-        notification = {
-          fade = true;
-          shadow = true;
-          opacity = 0.9;
-          focus = true;
-        };
-
-        # AwesomeWM Wibox
-        dock = {
           clip-shadow-above = true;
-          shadow = true;
-          opacity = 0.9;
-        };
+        }
+      ];
 
-        dnd = {
-          fade = true;
-          shadow = false;
-          opacity = 0.8;
-        };
-
-        # unknown = {};
-        # desktop = {};
-        # normal = { fade = true; };
-      };
+      #}}}
     };
   };
 }
