@@ -115,7 +115,12 @@
       # "split_lock_detect=off"
 
       # Fix the PSR issues - if the screen only refreshes when moving the mouse, use this.
-      # "amdgpu.dcdebugmask=0x12"
+      # Set DC_DISABLE_STUTTER and DC_DISABLE_PSR
+      "amdgpu.dcdebugmask=0x12"
+      # Set DC_DISABLE_REPLAY
+      # "amdgpu.dcdebugmask=0x400"
+      # Set DC_DISABLE_PSR only
+      # "amdgpu.dcdebugmask=0x10"
 
       # The default for AMD pstate is "active", Also possible: "passive" and "guided"
       "amd_pstate=guided"
