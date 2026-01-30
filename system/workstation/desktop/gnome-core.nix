@@ -187,4 +187,22 @@
       };
     };
   };
+
+  #############################################################################
+  # GStreamer Plugins for Totem
+  #
+  # Just installing the plugins is not enough. Gnome apps like Totem
+  # require the GST_PLUGIN_SYSTEM_PATH_1_0 variable to be set properly.
+  #
+  # See:
+  #  * https://github.com/NixOS/nixpkgs/issues/53631
+  #  * https://github.com/NixOS/nixpkgs/issues/195936
+  environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
+    lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" [
+      pkgs.gst_all_1.gst-plugins-good
+      pkgs.gst_all_1.gst-plugins-bad
+      pkgs.gst_all_1.gst-plugins-ugly
+      pkgs.gst_all_1.gst-libav
+    ];
+
 }
