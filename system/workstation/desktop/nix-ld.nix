@@ -58,22 +58,22 @@ in {
     stdenv.cc.cc.lib # standard compiler env/libs
 
     # X and related
-    xorg.libxshmfence
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXrender
-    xorg.libXinerama
-    xorg.libXfixes
-    xorg.libXrandr
-    xorg.libxcb
-    xorg.libXext
-    xorg.libXxf86vm
-    xorg.libXcursor
-    xorg.libXScrnSaver
-    xorg.libXi
-    xorg.libXtst
-    xorg.libxkbfile
+    libxshmfence
+    libX11
+    libXcomposite
+    libXdamage
+    libXrender
+    libXinerama
+    libXfixes
+    libXrandr
+    libxcb
+    libXext
+    libXxf86vm
+    libXcursor
+    libXScrnSaver
+    libXi
+    libXtst
+    libxkbfile
     libxkbcommon
     fontconfig.lib
     freetype

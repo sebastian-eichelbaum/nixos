@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   # Compositing.
@@ -45,10 +49,6 @@
       # Only redraw changed parts of the screen
       use-damage = true;
 
-      # Performance? Refer to picom manual for details.
-      glx-no-stencil = true;
-      glx-no-rebind-pixmap = true;
-
       # }}}
 
       #########################################################################
@@ -63,6 +63,11 @@
 
       # Do not fade on window open/close.
       no-fading-openclose = false;
+
+      # }}}
+
+      #########################################################################
+      # {{{ Opacity
 
       # }}}
 
@@ -87,7 +92,9 @@
       # inactive-opacity = 0.9;
       # active-opacity = 0.9;
       # frame-opacity = 0.9;
-      # menu-opacity = 0.9;
+      #
+      # MUST set: currently nix sets this value to some generated wintypes list.
+      menu-opacity = 0.95;
 
       # Can look nice but causes a flicker for grouped windows sometimes if the child window closes.
       # NOTE: when using a color picker, the color picker picks up the dimmed color for inactive windows.
@@ -147,50 +154,82 @@
       #
 
       # See: https://picom.app/#_window_rules
-
-      rules = [
-
-        # Disable fading for normal windows except Rofi
-        # This still fades menus, drop downs, ...
-        {
-          match = "window_type = 'normal' && class_g != 'Rofi'";
-          fade = false;
-        }
-
-        # Menus need some re-styling.
-        {
-          match =
-            "window_type *= 'menu' || window_type = 'dropdown_menu' || window_type = 'popup_menu' || window_type ='combo'";
-
-          # Those GTK menus use a blurred frame that looks strange. Disable blur.
-          blur-background = false;
-
-          # Enable full shadow to have shadows on menus? The shadows looks huge on GTK menus.
-          shadow = false;
-          full-shadow = false;
-
-          # Menus should be a bit transparent
-          opacity = 0.95;
-        }
-
-        # Firefox has the same problem with those tab preview tooltips
-        {
-          match = "class_g = 'firefox'";
-          shadow = true;
-          full-shadow = true;
-          blur-background = false;
-        }
-
-        # Window-manager dock
-        {
-          match = "window_type = 'dock'";
-          shadow = true;
-          opacity = 0.9;
-          clip-shadow-above = true;
-        }
-      ];
+      # Generates a broken config right now :( - no direct "settings.rules" available in nix right now. Those rules
+      # where implemented using fadeExclude, shadowExclude, opacity rules, ... below
+      # rules = [
+      #
+      #   # Disable fading for normal windows except Rofi
+      #   # This still fades menus, drop downs, ...
+      #   {
+      #     match = "window_type = 'normal' && class_g != 'Rofi'";
+      #     fade = false;
+      #   }
+      #
+      #   # Menus need some re-styling.
+      #   {
+      #     match = "window_type *= 'menu' || window_type = 'dropdown_menu' || window_type = 'popup_menu' || window_type ='combo'";
+      #
+      #     # Those GTK menus use a blurred frame that looks strange. Disable blur.
+      #     blur-background = false;
+      #
+      #     # Enable full shadow to have shadows on menus? The shadows looks huge on GTK menus.
+      #     shadow = false;
+      #     full-shadow = false;
+      #
+      #     # Menus should be a bit transparent
+      #     opacity = config.services.picom.menuOpacity;
+      #   }
+      #
+      #   # Firefox has the same problem with those tab preview tooltips
+      #   {
+      #     match = "class_g = 'firefox'";
+      #     shadow = true;
+      #     full-shadow = true;
+      #     blur-background = false;
+      #   }
+      #
+      #   # Window-manager dock
+      #   {
+      #     match = "window_type = 'dock'";
+      #     shadow = true;
+      #     opacity = 0.9;
+      #     clip-shadow-above = true;
+      #   }
+      # ];
 
       #}}}
     };
+
+    # MOSTLY achieves the same results as the rules above but is a bit more verbose and less flexible. But it works for now.
+
+    wintypes = {
+      menu = {
+        blur-background = false;
+      };
+      dropdown_menu = {
+        blur-background = false;
+      };
+      popup_menu = {
+        blur-background = false;
+      };
+      combo = {
+        blur-background = false;
+      };
+    };
+
+    shadowExclude = [
+      "window_type *= 'menu' || window_type = 'dropdown_menu' || window_type = 'popup_menu' || window_type ='combo'"
+    ];
+
+    opacityRules = [
+      "80:window_type = 'dock'"
+      "95:window_type *= 'menu' || window_type = 'dropdown_menu' || window_type = 'popup_menu' || window_type ='combo'"
+    ];
+
+    fadeExclude = [
+      # Exclude normal windows except Rofi
+      "window_type = 'normal' && class_g != 'Rofi'"
+    ];
+
   };
 }

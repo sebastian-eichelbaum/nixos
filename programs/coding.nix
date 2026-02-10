@@ -2,7 +2,12 @@
 # Work related stuff
 #
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Ensure that all runtimes are enabled. Neovim itself is enabled as system default
@@ -59,7 +64,8 @@
     ## > Scripting and system stuff
     stylua
     lua-language-server
-    nixfmt-classic
+    nixd
+    nixfmt
     shfmt
     bash-language-server
 
@@ -77,8 +83,8 @@
 
     # Ensure some mandatory packages are in unity's path
     (unityhub.override {
-      extraLibs = pkgs:
-        with pkgs; [
+      extraLibs =
+        pkgs: with pkgs; [
           # Without this, the vulkan libs will not be found -> no vulkan
           # renderer in unity (required for HDRP)
           vulkan-loader

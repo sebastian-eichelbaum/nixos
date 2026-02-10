@@ -106,7 +106,7 @@
   boot = {
     # Kernel parameters
     kernelParams = [
-      "button.lid_init_state=open"
+      # "button.lid_init_state=open"
 
       #"iommu=soft"
 
@@ -116,7 +116,7 @@
 
       # Fix the PSR issues - if the screen only refreshes when moving the mouse, use this.
       # Set DC_DISABLE_STUTTER and DC_DISABLE_PSR
-      "amdgpu.dcdebugmask=0x12"
+      # "amdgpu.dcdebugmask=0x12"
       # Set DC_DISABLE_REPLAY
       # "amdgpu.dcdebugmask=0x400"
       # Set DC_DISABLE_PSR only
@@ -232,11 +232,40 @@
   # sufficient to have it loaded later and used in xserver.
   hardware.amdgpu.initrd.enable = lib.mkDefault true;
 
-  services.xserver.deviceSection = ''Option "VariableRefresh" "true"'';
+  # Explicitly set the video drivers to use.
+  services.xserver.videoDrivers = [ "amdgpu" "modesetting" ];
 
   # }}}
 
-  # {{{ Display (Color) Profile
+  # {{{ Display
+
+  # {{{ VRR
+
+  # Enable variable refresh rate (VRR) support for the built-in display
+  services.xserver.deviceSection = ''Option "VariableRefresh" "true"'';
+
+  # # Configure a custom EDID to DISABLE VRR on the internal display.
+  # hardware.display.edid = {
+  #   enable = true;
+  #   packages = [
+  #     # Create a custom EDID file for the internal display. Must be a base64 encoded file.
+  #     # To get the current EDID:
+  #     #   base64 < /sys/class/drm/card1-eDP-1/edid
+  #     (pkgs.runCommand "edid-custom" { } ''
+  #       mkdir -p "$out/lib/firmware/edid"
+  #       base64 -d > "$out/lib/firmware/edid/InternalNoVRR.bin" <<'EOF'
+  #       AP///////wAOdzEUAAAAAAAhAQS1HhN4Ai9VplRMmyQNUFQAAAABAQEBAQEBAQEBAQEBAQEBF4hAoLAIbnAwIGYALbwQAAAYAAAA/QAeeObmRgEKICAgICAgAAAA/gBDU09UIFQzICAgICAgAAAA/ABNTkUwMDdaQTMtMgogAbdwIHkCAIEAFXQaAAADUR54AAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADfkA==
+  #       EOF
+  #     '')
+  #   ];
+  # };
+  #
+  # # Tell the system to use the custom EDID for the internal display
+  # hardware.display.outputs.eDP.edid = "InternalNoVRR.bin";
+
+  # }}}
+
+  # {{{ Color Profile
   #
   # Apply the correct color profile (icm,icc) for this device
   # services.xserver.displayManager.sessionCommands = ''
@@ -246,6 +275,8 @@
   #     xcalib -output eDP-0 $profile
   #   fi
   # '';
+  #
+  # }}}
 
   # {{{ Display Setup with autorandr for Docked/Mobile profiles
   services.autorandr.profiles = {

@@ -16,7 +16,7 @@
     raleway
 
     ###########################################################################
-    # Graphics and office work
+    # Graphics, Office work, Productivity
     #
 
     gimp
@@ -24,6 +24,8 @@
     blender
 
     libreoffice
+
+    standardnotes
 
     ###########################################################################
     # Utils

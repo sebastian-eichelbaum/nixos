@@ -102,15 +102,15 @@
     ##########################################################################
     # Xorg base tools (some commonly used subset of them)
 
-    xorg.xmessage # print messages. Used for errors in early setup stages.
-    xorg.xev # xev - the x event debugger
-    xorg.xset # xset - the x settings tool
-    xorg.xrdb # xrdb - the Xresources/Xdefaults tool
-    xorg.xkill # xkill - the graphical program killer
-    xorg.xprop # xprop - print X properties of windows
-    xorg.xrandr # xrandr - the physical display manager
-    xorg.xsetroot # xsetroot - set root window. required by some WM setups
-    xorg.setxkbmap # setxkbmap - modify the keymap used in X
+    xmessage # print messages. Used for errors in early setup stages.
+    xev # xev - the x event debugger
+    xset # xset - the x settings tool
+    xrdb # xrdb - the Xresources/Xdefaults tool
+    xkill # xkill - the graphical program killer
+    xprop # xprop - print X properties of windows
+    xrandr # xrandr - the physical display manager
+    xsetroot # xsetroot - set root window. required by some WM setups
+    setxkbmap # setxkbmap - modify the keymap used in X
 
     xclip # clipboard provider. Needed for vim/greenclip/...
     xdotool # Programmatically perform X ops. Needed for rofi-pass/...

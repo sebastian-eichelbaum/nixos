@@ -6,7 +6,7 @@
   #
 
   # Needed by those scripts
-  environment.systemPackages = with pkgs; [ xorg.xdpyinfo libnotify ];
+  environment.systemPackages = with pkgs; [ xdpyinfo libnotify ];
 
   services.autorandr = {
     enable = true;
@@ -44,7 +44,7 @@
           xsettingsDPI=$(( 1024*xdpi ))
 
           # Push to the Xresourses DB. Do not fail.
-          echo "Xft.dpi: $xdpi" | ${pkgs.xorg.xrdb}/bin/xrdb -merge || true
+          echo "Xft.dpi: $xdpi" | ${pkgs.xrdb}/bin/xrdb -merge || true
 
           # Push to xsettingsd. Ensure it exists and ensure it is not empty (size=0 via [-s])
           mkdir -p $HOME/.config/xsettingsd/

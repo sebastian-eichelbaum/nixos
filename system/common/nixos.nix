@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # This value determines the NixOS release from which the default
@@ -47,7 +52,7 @@
     # nix-index
 
     # Code formatter for nix.
-    nixfmt-classic
+    nixfmt
   ];
 
   #############################################################################
