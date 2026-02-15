@@ -222,7 +222,7 @@
     ];
 
     opacityRules = [
-      "85:window_type = 'dock'"
+      "90:window_type = 'dock'"
       "95:window_type *= 'menu' || window_type = 'dropdown_menu' || window_type = 'popup_menu' || window_type ='combo'"
     ];
 
