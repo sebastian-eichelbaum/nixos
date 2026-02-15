@@ -4,7 +4,7 @@ Personal NixOS configuration for work and pleasure. This configuration does not 
 
 This creates a minimal encrypted dev machine, using X+AwesomeWM for windowing; neovim, zsh and devbox for coding/working.
 
-Works well with my dotfiles: https://github.com/sebastian-eichelbaum/dotfiles
+Works well with my dotfiles: https://github.com/seichelbaum/dotfiles
 
 ## NixOS Installation for workstations
 
@@ -62,7 +62,7 @@ the created config is only relevant for initial hardware configuration.
   cd /mnt/etc
   # Clone the public http-based repo as we do not have setup any SSH keys.
   # Update the remote later.
-  git clone https://github.com/sebastian-eichelbaum/nixos.git
+  git clone https://github.com/seichelbaum/nixos.git
   cd nixos
   ```
 - Generate the machine configuration, if needed. Usually, the easiest way to get new hardware running is to use one of the already existing machines as a template:
