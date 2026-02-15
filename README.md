@@ -117,3 +117,10 @@ a package and so on. Overlays allow us to modify an existing nixpkg specificatio
 There are some examples provided:
 
 - [quirks/example.changeSrcURL.nix](quirks/example.changeSrcURL.nix) - change the URL where to download the source/proprietary package from.
+
+## Flakes?
+
+Why not use flakes? Flakes require all files to be present in git. As this setup uses a system-specific
+configuration.nix (containing secrets) that is not in git, flakes are not an option. A solution would require to add
+secrets management, like agenix, to the equation. Honestly, for a bunch of password hashes, this is not worth
+the effort.
